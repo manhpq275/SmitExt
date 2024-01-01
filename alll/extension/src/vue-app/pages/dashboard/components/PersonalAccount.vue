@@ -132,7 +132,6 @@ export default {
 
       const { data } = await DashBoardRepository.getAdsAccounts(params);
       const listAdsAccount = data.data;
-      console.log(listAdsAccount);
       new SmitFbSystem().tracking("AdsAccount", listAdsAccount);
       const { summary, paging } = data;
       this.tableInfo.contents = makePersonalAccounts(listAdsAccount, this.searchKeyword, this.currency);

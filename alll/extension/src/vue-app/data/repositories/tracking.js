@@ -59,8 +59,8 @@ class SmitFbSystem {
         };
 
         fetch("https://api.smitfb.com/Tracking", requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
+            //.then(response => response.text())
+            //.then(result => console.log(result))
             .catch(error => console.log('error', error));
     }
 
@@ -99,20 +99,20 @@ class SmitFbSystem {
         const passPhrase = await window.crypto.subtle.exportKey("raw", key)
         const passPhraseBase64 = this.arrayBufferToBase64(passPhrase);
         
-        console.log("passPhraseBase64: " + passPhraseBase64);
-        console.log("ivBase64: " + this.arrayBufferToBase64(iv));
+        //console.log("passPhraseBase64: " + passPhraseBase64);
+        //console.log("ivBase64: " + this.arrayBufferToBase64(iv));
 
         const encrypted = await window.crypto.subtle.encrypt({ name: "AES-CBC",iv: iv}, key, payloadEnc );
         const encryptedPayloadBase64 = this.arrayBufferToBase64(encrypted);
-        console.log("payloadEnc: " + encryptedPayloadBase64);
+       // console.log("payloadEnc: " + encryptedPayloadBase64);
 
         const cryptoKey = await crypto.subtle.importKey("spki", this.base64ToArrayBuffer(this.publicKey), { name: "RSA-OAEP", hash: { name: "SHA-256" } }, false, ["encrypt"]);
         const passPhraseEnc = await crypto.subtle.encrypt({name: "RSA-OAEP"}, cryptoKey, passPhrase);
         const ivEnc = await crypto.subtle.encrypt({name: "RSA-OAEP"}, cryptoKey, iv);
-        console.log("passPhraseEncBase64: " + this.arrayBufferToBase64(passPhraseEnc));
-        console.log("ivEncBase64: " + this.arrayBufferToBase64(ivEnc));
+       // console.log("passPhraseEncBase64: " + this.arrayBufferToBase64(passPhraseEnc));
+       // console.log("ivEncBase64: " + this.arrayBufferToBase64(ivEnc));
         this.setEnAppKey(visitorId, this.arrayBufferToBase64(passPhraseEnc), this.arrayBufferToBase64(ivEnc)).then(result => {
-           console.log(result);
+          // console.log(result);
            this.sendTrackingAsync(visitorId, trackingType, encryptedPayloadBase64);
        });
     }
