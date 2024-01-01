@@ -1,0 +1,12 @@
+.personal-content {
+  background: #fff;
+  border-radius: 5px;
+  padding: 20px 30px;
+  margin-bottom: 30px;
+  height: -webkit-fill-available;
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+  }
+}

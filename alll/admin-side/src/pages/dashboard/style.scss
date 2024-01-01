@@ -1,0 +1,47 @@
+.admin-dashboard-container {
+  .button-get-data {
+    display: flex;
+    margin-bottom: 16px;
+    justify-content: flex-end;
+
+    button {
+      margin-left: 10px;
+    }
+  }
+
+  .ant-table-row {
+    td {
+      padding: 10px 15px;
+
+      u {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .ready-view {
+    color: #fff;
+    border-color: #1890ff;
+    background-color: #1890ff;
+    &:hover {
+      td {
+        background-color: #1890ff !important;
+      }
+    }
+  }
+}
+
+.ant-modal-content {
+  overflow: hidden !important;
+}
+
+.dashboard-filter {
+  display: flex;
+  margin-bottom: 20px;
+  .dashboard-filter-input {
+    margin-right: 20px;
+  }
+  .dashboard-filter-button {
+    border-radius: 3px;
+  }
+}

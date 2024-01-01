@@ -1,0 +1,14 @@
+
+.DS_Store
+
+*.code-workspace
+
+alll/.github/workflows/
+
+alll/extension/.idea/
+
+alll/extension/build/
+
+alll/extension/build-resources/
+
+alll/extension/node_modules/

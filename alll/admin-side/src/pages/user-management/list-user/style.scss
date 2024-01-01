@@ -1,0 +1,62 @@
+.admin-dashboard-container {
+  .user-id {
+    width: 100px;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .ant-table-cell {
+    .uploaded,
+    .not-uploaded {
+      min-width: 120px;
+      margin-right: 10px;
+      border-style: dashed;
+    }
+
+    .uploaded {
+      color: green;
+      border-color: green;
+    }
+
+    .not-uploaded {
+      color: red;
+      border-color: red;
+    }
+  }
+}
+
+.file-container {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  position: relative;
+  border-radius: 3px;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #ccc;
+
+  .close-btn {
+    width: 25px;
+    right: 10px;
+    height: 25px;
+    display: flex;
+    position: absolute;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #ccc;
+    }
+  }
+}
+
+.upload-btn {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}

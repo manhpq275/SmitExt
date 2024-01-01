@@ -1,0 +1,1 @@
+docker run --name smit-v2 -p 4306:3306 -e MYSQL_ROOT_PASSWORD=Luna1234@ -e MYSQL_DATABASE=cookiemgmt -e MYSQL_USER=vps -e MYSQL_PASSWORD=Luna1234@ -d mysql 

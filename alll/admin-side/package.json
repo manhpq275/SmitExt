@@ -1,0 +1,45 @@
+{
+  "name": "client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build-baarun": "tsc && vite build --mode baarun",
+    "build-cufads": "tsc && vite build --mode cufads",
+    "build-focuzfb": "tsc && vite build --mode focuzfb",
+    "build-jamfb": "tsc && vite build --mode jamfb",
+    "build-smitfb": "tsc && vite build --mode smitfb",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^4.7.0",
+    "@reduxjs/toolkit": "^1.8.5",
+    "antd": "^4.22.8",
+    "axios": "^0.27.2",
+    "i18next": "^21.9.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
+    "react-i18next": "^11.18.5",
+    "react-redux": "^8.0.2",
+    "react-router-dom": "^6.4.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.3",
+    "@types/jquery": "^3.5.14",
+    "@types/lodash": "^4.14.178",
+    "@types/node": "^18.7.14",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "@types/react-helmet": "^6.1.5",
+    "@types/react-router-redux": "^5.0.21",
+    "@types/react-toastify": "^4.1.0",
+    "@types/uuid": "^8.3.4",
+    "@vitejs/plugin-react": "^2.0.1",
+    "sass": "^1.45.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.0.7"
+  }
+}

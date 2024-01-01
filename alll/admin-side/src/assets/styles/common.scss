@@ -1,0 +1,27 @@
+button,
+.btn {
+	border: none;
+	display: flex;
+	font-size: 15px;
+	color: #ffffff;
+	padding: 5px 10px;
+	border-radius: 3px;
+	align-items: center;
+	justify-content: center;
+
+	&:hover {
+		color: #ffffff;
+	}
+
+	&-default {
+		color: #000000;
+
+		&:hover {
+			color: #000000;
+		}
+	}
+}
+
+img {
+	width: 100%;
+}

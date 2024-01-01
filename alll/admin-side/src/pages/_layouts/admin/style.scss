@@ -1,0 +1,33 @@
+@import '../../../assets/styles/mixins.scss';
+
+.admin-layout {
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
+	position: relative;
+
+	.header-section {
+		height: 60px;
+	}
+
+	.main-section {
+		width: 100%;
+		display: flex;
+		height: calc(100vh - 60px);
+	}
+
+	.sidebar-section {
+		width: 100%;
+		max-width: 230px;
+	}
+
+	.main-content-section {
+		width: 100%;
+		height: 100%;
+		overflow: overlay;
+		padding: 50px 50px 0;
+		background-color: #f6f6f6;
+
+		@include scrollbar;
+	}
+}
