@@ -83,6 +83,9 @@ module.exports = (env, agr) => {
       ],
     },
     plugins: [
+      new webpack.DefinePlugin({
+        __VUE_PROD_DEVTOOLS__: JSON.stringify(agr.mode)
+      }),
       new Dotenv({ path: `.env.${env.NODE_ENV}` }),
       new webpack.ProgressPlugin(),
       new webpack.DefinePlugin({ "process.env.MODE": JSON.stringify(agr.mode) }),

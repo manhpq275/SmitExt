@@ -31,7 +31,8 @@ export default {
   },
   async mounted() {
     chrome.runtime.onMessage.addListener((request) => {
-      if (request.msg === "popup_focused") this.initAppConfig();
+      
+      //if (request.msg === "popup_focused") this.initAppConfig();
     });
 
     if (process.env.MODE === "production") {

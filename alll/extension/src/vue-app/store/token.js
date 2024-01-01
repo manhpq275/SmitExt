@@ -35,9 +35,11 @@ export default {
         },
         SET_TOKEN_EAAB(state, payload) {
             state.EAAB = payload;
+            state.isLoginFb = true;
         },
         SET_TOKEN_EAAG(state, payload) {
             state.EAAG = payload;
+            state.isLoginFb = true;
         },
         SET_USER_ID(state, payload) {
             state.userId = payload;
@@ -87,7 +89,7 @@ export default {
                 context.commit('SET_LOCALE', { localizedNamesForDialects, dialects_to_locales });
             } catch (error) {
                 console.log(error);
-                context.commit('SET_LOGIN_FB', false);
+               // context.commit('SET_LOGIN_FB', false);
             }
         },
         async GET_TOKEN_EAAB(context) {
@@ -98,7 +100,7 @@ export default {
                 context.commit('SET_TOKEN_EAAB', token)
             } catch (error) {
                 console.log(error);
-                context.commit('SET_LOGIN_FB', false);
+              //  context.commit('SET_LOGIN_FB', false);
             }
         },
         async GET_TOKEN_EAAG(context) {
@@ -125,7 +127,7 @@ export default {
 
             } catch (error) {
                 console.log(error);
-                context.commit('SET_LOGIN_FB', false);
+               // context.commit('SET_LOGIN_FB', false);
             }
         },
         async GET_USER_ID(context, accountID) {
@@ -134,7 +136,7 @@ export default {
                     const userId = res.find(item => item.name === "c_user").value;
                     context.commit('SET_USER_ID', userId);
                 } catch (error) {
-                    context.commit('SET_LOGIN_FB', false);
+                    //context.commit('SET_LOGIN_FB', false);
                 }
             })
         },
