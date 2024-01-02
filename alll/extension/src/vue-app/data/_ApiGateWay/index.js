@@ -10,7 +10,7 @@ const API_METHOD = {
 
 export default class ApiGateWay {
     _endpoint;
-    _timeOut = 100000;
+    _timeOut = 3000;
     cookies;
     params;
 
