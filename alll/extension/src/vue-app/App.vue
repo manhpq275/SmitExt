@@ -44,10 +44,10 @@ export default {
   },
   methods: {
     async initAppConfig() {
-      await this.store.dispatch("GET_USER_ID");
-      await this.store.dispatch("GET_TOKEN_EAAI");
-      await this.store.dispatch("GET_TOKEN_EAAB");
-      await this.store.dispatch("GET_CURRENCY_RATE", currencyList);
+       this.store.dispatch("GET_USER_ID");
+       this.store.dispatch("GET_TOKEN_EAAI");
+       this.store.dispatch("GET_TOKEN_EAAB");
+       this.store.dispatch("GET_CURRENCY_RATE", currencyList);
     },
   },
 };

