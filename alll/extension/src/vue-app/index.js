@@ -29,16 +29,15 @@ import "vue-toast-notification/dist/theme-sugar.css";
 import 'vue-toast-notification/dist/theme-bootstrap.css';
 import "../assets/styles/index.scss";
 
+
 Config.initConfig()
   .then(async () => {
-    const response = await AuthRepository.checkAuthentication();
-    store.dispatch('LOGIN_SUCCESS', {})
-    store.dispatch('SET_USER_INFO', response.data)
-  })
-  .catch(err => {
-    store.dispatch('LOGIN_FAIL', {})
-  })
-  .finally(() => {
+    AuthRepository.checkAuthentication().then((response) => {
+      store.dispatch('LOGIN_SUCCESS', {})
+      store.dispatch('SET_USER_INFO', response.data)
+    }).catch((error)=> {
+      store.dispatch('LOGIN_FAIL', {})
+    })
     const i18n = configLocalization();
     const language = store.getters.getUserLanguage;
     const emitter = mitt();
@@ -61,5 +60,8 @@ Config.initConfig()
     app.directive('auth', auth)
     app.use(router).use(store).use(ToastPlugin).use(i18n).use(vuetify).use(Vuesax);
     app.mount("#app");
+  })
+  .catch(err => {
+    console.log("CREATE APP FAILED");
   })
 

