@@ -12,3 +12,13 @@ alll/extension/build/
 alll/extension/build-resources/
 
 alll/extension/node_modules/
+
+alll/extension_v2/.idea/
+
+alll/extension_v2/local/build/
+
+alll/extension_v2/local/node_modules/
+
+alll/extension_v2/remote/build-resources/
+
+alll/extension_v2/remote/node_modules/

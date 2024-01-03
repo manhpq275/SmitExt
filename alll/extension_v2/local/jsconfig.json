@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "module": "CommonJS",
+        "target": "ES6",
+        "baseUrl": ".",
+        "paths": {
+            // "@smit-app/*": ["src/smit-app/*"],
+            // "@vue-app/*": ["src/vue-app/*"],
+            // "@data/*": ["src/vue-app/data/*"],
+            "@fonts/*": ["src/assets/fonts/*"],
+            // "@pages/*": ["src/vue-app/pages/*"],
+            "@images/*": ["src/assets/images/*"],
+            "@styles/*": ["src/assets/styles/*"],
+            // "@constant/*": ["src/vue-app/constant/*"],
+            // "@components/*": ["src/vue-app/components/*"],
+            // "@api/*": ["src/vue-app/api/*"],
+            // "@utils/*": ["src/vue-app/utils/*"],
+            // "@common/*": ["src/vue-app/common/*"],
+        }
+    },
+    "include": [
+        "src/**/*"
+    ]
+}
