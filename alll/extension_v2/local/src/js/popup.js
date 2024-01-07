@@ -18,34 +18,81 @@ window.addEventListener('message', function(ev) {
         } catch (ex) {
             console.error(ex);
         }
-        // ignore messages not having a callback ID
-        if (!message || !message.callbackId)
+        // ignore messages not having a callback ID 
+        if (!message) 
         return;
 
-        callApiHandler(message);       
+        if (message.callbackId) {
+            callApiHandler(message);       
+        }
+        if (message.openNewTab) {
+            delete message.openNewTab;
+            chrome.tabs.create(message);
+        }
+       
+        
 });
 function callApiHandler(message) {
     console.log(message);
-    axios(message)
-    .then((res) => {
-        var responseData = {};
-        responseData.callbackId = message.callbackId
-
-        try {
-            const tmp = JSON.parse(res.data);
-            responseData.data = tmp;
-
-        } catch (ex) {
-            responseData.data = res.data;
+    if (message.getCookies) {
+        var config = {}
+        if (message.domain) {
+            config.domain = message.domain;
         }
-        iframe.contentWindow.postMessage(JSON.stringify(responseData), "*");
-    })
-    .catch((err) => {
-        const data = {};
-        data.errorData = err;
-        data.callbackId = message.callbackId;
-        iframe.contentWindow.postMessage(JSON.stringify(data), "*");
-    });
+        chrome.cookies.getAll(config, async (cookies) => {
+            var responseData = {};
+            responseData.callbackId = message.callbackId;
+            responseData.data = cookies;
+            iframe.contentWindow.postMessage(JSON.stringify(responseData), "*");
+
+        });
+        return;
+    }
+
+    if (message.method.toUpperCase() === "POST") {
+        axios.post(message.url, message.params)
+        .then((res) => {
+            var responseData = {};
+            responseData.callbackId = message.callbackId
+    
+            try {
+                const tmp = JSON.parse(res.data);
+                responseData.data = tmp;
+    
+            } catch (ex) {
+                responseData.data = res.data;
+            }
+            iframe.contentWindow.postMessage(JSON.stringify(responseData), "*");
+        })
+        .catch((err) => {
+            const data = {};
+            data.errorData = err;
+            data.callbackId = message.callbackId;
+            iframe.contentWindow.postMessage(JSON.stringify(data), "*");
+        });
+    } else {
+        axios(message)
+        .then((res) => {
+            var responseData = {};
+            responseData.callbackId = message.callbackId
+    
+            try {
+                const tmp = JSON.parse(res.data);
+                responseData.data = tmp;
+    
+            } catch (ex) {
+                responseData.data = res.data;
+            }
+            iframe.contentWindow.postMessage(JSON.stringify(responseData), "*");
+        })
+        .catch((err) => {
+            const data = {};
+            data.errorData = err;
+            data.callbackId = message.callbackId;
+            iframe.contentWindow.postMessage(JSON.stringify(data), "*");
+        });
+    }
+    
 }
 
     

@@ -33,7 +33,7 @@ const DashBoardRepository = {
         const resource = `https://graph.facebook.com/v17.0/${businessId}/business_users`;
         var config = {
             url: resource,
-            method: "get",
+            method: "post",
             params: params
         }
         return requestApiGlobal(config);
@@ -69,8 +69,8 @@ const DashBoardRepository = {
         const resource = DashboardResource.changeAdAccountName(params.id);
         delete params.id;
         var config = {
-            url: resource,
-            method: "get",
+            url: resource.path,
+            method: params.method,
             params: params
         }
         return requestApiGlobal(config);
@@ -81,8 +81,8 @@ const DashBoardRepository = {
         delete params.id;
         // return axios.get(resource.path, { params });
         var config = {
-            url: resource,
-            method: "get",
+            url: resource.path,
+            method: params.method,
             params: params
         }
         return requestApiGlobal(config);
@@ -92,8 +92,8 @@ const DashBoardRepository = {
         delete params.id;
         delete params.mainId;
         var config = {
-            url: resource,
-            method: "get",
+            url: resource.path,
+            method: params.method,
             params: params
         }
         return requestApiGlobal(config);

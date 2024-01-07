@@ -15,7 +15,7 @@ export default {
   name: "LoginFacebook",
   methods: {
     onClickFacebookBtn() {
-      chrome.tabs.create({ url: "https://www.facebook.com/", active: true });
+      openNewTab({ url: "https://www.facebook.com/", active: true });
     },
   },
 };

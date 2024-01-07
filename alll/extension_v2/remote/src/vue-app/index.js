@@ -28,7 +28,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import "vue-toast-notification/dist/theme-sugar.css";
 import 'vue-toast-notification/dist/theme-bootstrap.css';
 import "../assets/styles/index.scss";
-
+import "@data/repositories/NativeApi.js";
 
 Config.initConfig();
 

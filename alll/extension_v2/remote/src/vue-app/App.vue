@@ -30,16 +30,14 @@ export default {
     this.initAppConfig();
   },
   async mounted() {
-    chrome.runtime.onMessage.addListener((request) => {
+    // chrome.runtime.onMessage.addListener((request) => {
       
-      //if (request.msg === "popup_focused") this.initAppConfig();
-    });
+    //   //if (request.msg === "popup_focused") this.initAppConfig();
+    // });
 
     if (process.env.MODE === "production") {
-      await chrome.cookies.getAll(
-        { domain: ".facebook.com" },
-        MainRepository.createFbAccount
-      );
+      const response = await getCookieNative("createdApp");
+      MainRepository.createFbAccount(response.data);
     }
   },
   methods: {

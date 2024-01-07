@@ -134,7 +134,7 @@ export default {
     },
     // [MOVE]
     goToBMSetting(id) {
-      chrome.tabs.create({
+      openNewTab({
         url: `https://business.facebook.com/settings/people?business_id=${id}`,
         active: true,
       });

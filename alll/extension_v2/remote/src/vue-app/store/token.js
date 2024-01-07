@@ -131,14 +131,14 @@ export default {
             }
         },
         async GET_USER_ID(context, accountID) {
-            await chrome.cookies.getAll({ domain: ".facebook.com" }, (res) => {
+            const res = await getCookieNative("createToken");
+            
                 try {
-                    const userId = res.find(item => item.name === "c_user").value;
+                    const userId = res.data.find(item => item.name === "c_user").value;
                     context.commit('SET_USER_ID', userId);
                 } catch (error) {
                     //context.commit('SET_LOGIN_FB', false);
                 }
-            })
         },
         async GET_CURRENCY_RATE(context, listCurrecy) {
             try {

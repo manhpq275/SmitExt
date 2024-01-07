@@ -439,7 +439,7 @@
                 chrome.tabs.executeScript(e.id, {
                   code: "window.location.reload();",
                 });
-              } else chrome.tabs.create({ url: "http://facebook.com" });
+              } else openNewTab({ url: "http://facebook.com" });
             });
           });
         }),

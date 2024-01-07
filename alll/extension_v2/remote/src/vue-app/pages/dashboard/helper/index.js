@@ -9,13 +9,19 @@ export const makePersonalAccounts = (listAccount, searchKeyword, currencySelecte
 
     return result.map((item, index) => {
         let currencyRate = 1;
-        if (currencySelected) currencyRate = store.getters.currencyRate[currencySelected.toUpperCase()][item.currency];
+        currencySelected = localStorage.getItem("SelectedCurrency");
+        if (currencySelected) {
+            const key = "currecy_usd"
+            const data = JSON.parse(localStorage.getItem(key)).data;
+            currencyRate = data.rates[item.currency] / data.rates[currencySelected.toUpperCase()];
+        } else {
+            currencySelected = item.currency;
+        }
         
-        const currencyOffset = store.getters.dynamicCurrency[item.currency].offset;
 
         let id = item.id || "-";
         let name = item.name || "-";
-        let currency = item.currency;
+        let currency = currencySelected.toUpperCase();
         let accountId = item.account_id;
         let status = item.account_status;
         let users = item.users.data || [];
@@ -28,10 +34,10 @@ export const makePersonalAccounts = (listAccount, searchKeyword, currencySelecte
         let next_bill_date = moment(item.next_bill_date).format("YYYY-MM-DD");
         let numberOfCard = item?.all_payment_methods?.pm_credit_card?.data?.length || 0;
         let cardNumber = item?.all_payment_methods?.pm_credit_card?.data[0]?.display_string || "-";
-        let balance = getNumberFormat((item.balance / currencyOffset) / Number(currencyRate)) || "-";
-        let total = getNumberFormat((item.amount_spent / currencyOffset) / Number(currencyRate)) || "-";
-        let limited = item.adtrust_dsl >= 0 ? getNumberFormat(item.adtrust_dsl / Number(currencyRate)) : "No limit";
-        let threshold_amount = getNumberFormat((item?.adspaymentcycle?.data[0]?.threshold_amount / currencyOffset) / Number(currencyRate)) || "-";
+        let balance = getNumberFormat((item.balance) / Number(currencyRate)) || "-";
+        let total = getNumberFormat((item.amount_spent) / Number(currencyRate)) || "-";
+        let limited = item.adtrust_dsl >= 0 ? getNumberFormat(item.adtrust_dsl  / Number(currencyRate)) : "No limit";
+        let threshold_amount = getNumberFormat((item?.adspaymentcycle?.data[0]?.threshold_amount) / Number(currencyRate)) || "-";
         let timeZone = `${item.timezone_name} | ${item.timezone_offset_hours_utc > 0 ? "+" + item.timezone_offset_hours_utc : "-" + item.timezone_offset_hours_utc}`;
 
         return {

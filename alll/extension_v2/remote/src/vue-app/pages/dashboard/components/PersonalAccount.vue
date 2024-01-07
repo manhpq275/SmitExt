@@ -183,6 +183,7 @@ export default {
     },
     onChangeCurrency(currency) {
       this.currency = currency;
+      localStorage.setItem("SelectedCurrency", currency);
       this.getAdsAccount();
     },
     onClickHeaderIcon(item) {
@@ -215,7 +216,7 @@ export default {
       } else if (key === "threshold_amount") {
         action_url = `https://business.facebook.com/ads/manager/account_settings/information/?act=${id}&pid=p1&page=account_settings&tab=account_information`;
       }
-      chrome.tabs.create({ url: action_url, active: true });
+      openNewTab({ url: action_url, active: true });
     },
   },
 };
