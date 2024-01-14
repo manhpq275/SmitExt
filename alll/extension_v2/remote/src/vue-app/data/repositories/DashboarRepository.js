@@ -43,6 +43,7 @@ const DashBoardRepository = {
         const resource = `https://graph.facebook.com/v17.0/${businessId}/business_users`;
         var config = {
             url: resource,
+            method: "get",
             params: params
         }
         return requestApiGlobal(config);
@@ -52,6 +53,7 @@ const DashBoardRepository = {
         const resource = `https://graph.facebook.com/v17.0/${businessId}/pending_users`;
         var config = {
             url: resource,
+            method: "get",
             params: params
         }
         return requestApiGlobal(config);
@@ -60,6 +62,7 @@ const DashBoardRepository = {
         const resource = `https://graph.facebook.com/v17.0/${userId}`;
         var config = {
             url: resource,
+            method: "delete",
             params: params
         }
         return requestApiGlobal(config);

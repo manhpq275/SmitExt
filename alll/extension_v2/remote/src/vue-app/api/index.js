@@ -1,4 +1,5 @@
-import axios from 'axios';
+import "@data/repositories/NativeApi.js";
+
 import { readChromeLocalStorage } from '../pages/helper';
 
 /*
@@ -32,8 +33,11 @@ export async function getFacebookAct(ACCESS_TOKEN, FACEBOOK_ID, number, link = '
 			payment_method_direct_debits{address,can_verify,display_string,is_awaiting,is_pending,status},
 			payment_method_paypal{email_address},
 			payment_method_tokens{current_balance,original_balance,time_expire,type}},
-			total_prepay_balance,insights.date_preset(maximum){spend}&access_token=${ACCESS_TOKEN}`
-		return axios.get(API_FB)
+			total_prepay_balance,insights.date_preset(maximum){spend}&access_token=${ACCESS_TOKEN}`;
+		const config = {}
+		config.url = API_FB;
+		config.method = "GET"
+		return requestApiGlobal(config);
 	}))
 	const { paging, summary } = LIST_ACCOUNT_AD
 	const LIST = data.map(el => {
@@ -57,8 +61,10 @@ export async function getFacebookBMAcc(ACCESS_TOKEN, number = 50) {
 	const lsd = localStorage.getItem('lsd')
 	const data = await Promise.all(LIST_BM_AD.map(el => {
 		const API_FB = `https://business.facebook.com/business/adaccount/limits/?business_id=${el.id}&__a=1&fb_dtsg=${fb_dtsg}&lsd=${lsd}`
-		return axios.get(API_FB)
-	}))
+		const config = {}
+		config.url = API_FB;
+		config.method = "GET"
+		return requestApiGlobal(config)	}))
 	// const dataArr = await getAllRoleAccsWithBMAcc(LIST_BM_AD[0].id, fb_dtsg, lsd);
 	// console.log("dataArr = ", dataArr)
 	// const adAccountLimitArr = data.map(el => JSON.parse(el.data.match(/{"adAccountLimit(.*?)}/g)[0]));
@@ -74,7 +80,11 @@ export async function changePermissionForAcc(accId, uidArr, roleId) {
 	const token = await readChromeLocalStorage("access_token_EAAI");
 	return Promise.all(uidArr.map(async uid => {
 		const API = `https://graph.facebook.com/v14.0/act_${accId}/users?method=POST&access_token=${token}&role=${roleId}&uid=${uid}&locale=en_US`
-		return axios.get(API)
+		const config = {}
+		config.url = API;
+		config.method = "GET"
+
+		return requestApiGlobal(config)
 			.then(response => {
 				return { uid, success: true, message: 'Success!' };
 			})
@@ -91,7 +101,10 @@ export async function removePermissionAccount(accId, uidArr) {
 	return Promise.all(uidArr.map(async uid => {
 		console.log("uidArr = ", uidArr, ", uid = ", uid)
 		const API = `https://graph.facebook.com/v14.0/act_${accId}/users/${uid}?method=DELETE&access_token=${token}&locale=en_US`
-		return axios.get(API)
+		const config = {}
+		config.url = API;
+		config.method = "GET"
+		return requestApiGlobal(config)
 			.then(response => {
 				return { uid, success: true, message: 'Success!' };
 			})
@@ -103,19 +116,13 @@ export async function removePermissionAccount(accId, uidArr) {
 	}))
 }
 
-export async function getAccsPermission(id) {
-	const token = await readChromeLocalStorage("access_token_EAAI");
-	return axios.get(`https://graph.facebook.com/v14.0/act_${id}/users?method=GET&access_token=${token}&locale=en_US`)
-		.then(response => {
-			console.log("response = ", response)
-			return response.data.data;
-		})
-}
-
 async function getListIDAccountsAd(id, token, num, link) {
 	const apiFirst = `https://graph.facebook.com/v14.0/me/adaccounts?limit=${num}&fields=name,account_id,account_status,userpermissions.user(${id})%7Brole%7D&access_token=${token}&summary=1&locale=en_US`
 	const API = link != '' ? link : apiFirst;
-	return axios.get(API)
+	const config = {}
+	config.url = API;
+	config.method = "GET"
+	return requestApiGlobal(config)
 		.then(response => {
 			if (response?.data?.data?.length > 0) {
 				const data = response.data.data.map(el => {
@@ -137,7 +144,8 @@ async function getListIDAccountsAd(id, token, num, link) {
 }
 
 export async function getListBMsAd(token, num = 50) {
-	return axios.get(`https://graph.facebook.com/v14.0/me/businesses?fields=
+	const config = {}
+	config.url = `https://graph.facebook.com/v14.0/me/businesses?fields=
 	name,
 	id,
 	doc_id,
@@ -148,15 +156,16 @@ export async function getListBMsAd(token, num = 50) {
 	created_time,
 	permitted_roles,
 	client_ad_accounts.summary(1),
-	owned_ad_accounts.summary(1)&limit=${num}&access_token=${token}&locale=en_US`);
+	owned_ad_accounts.summary(1)&limit=${num}&access_token=${token}&locale=en_US`;
+	config.method = "GET"
+	return requestApiGlobal(config);
 }
 
 export async function getTokenEAAI() {
-	return axios
-		.get(
-			"https://www.facebook.com/ajax/bootloader-endpoint/?modules=AdsCanvasComposerDialog.react&__a=1"
-		)
-		.then(async (res) => {
+	const config = {}
+	config.url = "https://www.facebook.com/ajax/bootloader-endpoint/?modules=AdsCanvasComposerDialog.react&__a=1"
+	config.method = "GET"
+	return requestApiGlobal(config).then(async (res) => {
 			const token = res.data.match(/"access_token":"EAAI.*?"/)[0].replace(/\W/g, "").replace("access_token", "");
 			const FACEBOOK_ID = await getAccountIdFacebook(token)
 			chrome.storage.local.set({
@@ -173,13 +182,19 @@ export async function getTokenEAAI() {
 }
 
 export async function getAccountIdFacebook(accessToken) {
-	return (await axios.get(`https://graph.facebook.com/me?fields=id&access_token=${accessToken}`)).data.id
+	const config = {}
+	config.url = `https://graph.facebook.com/me?fields=id&access_token=${accessToken}`
+	config.method = "GET"
+	return await requestApiGlobal(config).data.id;
 }
 
 export async function changeAccountName(id, name) {
 	const token = await readChromeLocalStorage("access_token_EAAI")
 	try {
-		let data = await axios.get(`https://graph.facebook.com/v14.0/act_${id}?name=${name}&method=post&access_token=${token}&locale=en_US`)
+		const config = {}
+		config.url = `https://graph.facebook.com/v14.0/act_${id}?name=${name}&method=post&access_token=${token}&locale=en_US`
+		config.method = "GET"
+		let data = await requestApiGlobal(config);
 		console.log("data call API = ", data)
 		return data
 	}
@@ -189,7 +204,10 @@ export async function changeAccountName(id, name) {
 }
 
 export async function getFbDTSG() {
-	return axios.get("https://business.facebook.com/accountquality/?landing_page=overview")
+	const config = {}
+	config.url = "https://business.facebook.com/accountquality/?landing_page=overview";
+	config.method = "GET"
+	return requestApiGlobal(config)
 		.then(async (res) => {
 			const act = [...new Set(res.data.match(/"token":"(.*?)"/g))];
 			const access_token = res.data.match(/EAAE.*?"/)[0].replace(/\W/g, "");
@@ -205,8 +223,12 @@ export async function getFbDTSG() {
 
 async function getRateCurrency() {
 	const CURRENCIES = ['USD', 'VND']
+	const config = {}
+	config.url = "https://api.coinbase.com/v2/exchange-rates?currency=${el}";
+	config.method = "GET"
+
 	const response = await Promise.all(CURRENCIES.map(el => {
-		return axios.get(`https://api.coinbase.com/v2/exchange-rates?currency=${el}`)
+		return requestApiGlobal(config);
 	}))
 	const currency_rate = {
 		"usd_rate": response[0].data.data.rates,
@@ -219,7 +241,10 @@ async function getRateCurrency() {
 export async function getAllRoleAccsWithBMAcc(bmId, fb_dtsg, lsd) {
 	const tokenEAAE = await readChromeLocalStorage("access_token_EAAE")
 	const API = `https://graph.facebook.com/v14.0/${bmId}/business_users?access_token=${tokenEAAE}&fields=email,+first_name,+last_name,+id,+pending_email,+role&limit=300&locale=en_US`;
-	const data1 = await axios.get(API)
+	const config = {}
+	config.url = API;
+	config.method = "GET"
+	const data1 = await requestApiGlobal(config)
 		.then(response => {
 			console.log("getAllRoleAccsWithBMAcc = ", bmId, ": ", response.data.data)
 			return response?.data?.data || [];
@@ -273,44 +298,44 @@ export async function getAllRoleAccsWithBMAcc(bmId, fb_dtsg, lsd) {
 	return 1;
 }
 
-export async function getTokenEAAB() {
-	let token_EAAB = await chrome.storage.local.get(["access_token_EAAB"]).then(result => result.access_token_EAAB)
-	if (token_EAAB) return token_EAAB.replace(/\W/g, "");
-	const accountID = await getAdAccountIdFacebook();
-	return axios.get(`https://www.facebook.com/adsmanager/manage/campaigns?act=${accountID}&nav_source=no_referrer`)
-		.then(function (res2) {
-			const token = res2.data.match(/EAAB.*?"/)[0].replace(/\W/g, "");
-			chrome.storage.local.set({
-				access_token_EAAB: JSON.stringify(token),
-			});
-			return token;
-		})
-		.catch(err => {
-			console.log(err);
-		});
-}
+// export async function getTokenEAAB() {
+// 	let token_EAAB = await chrome.storage.local.get(["access_token_EAAB"]).then(result => result.access_token_EAAB)
+// 	if (token_EAAB) return token_EAAB.replace(/\W/g, "");
+// 	const accountID = await getAdAccountIdFacebook();
+// 	return axios.get(`https://www.facebook.com/adsmanager/manage/campaigns?act=${accountID}&nav_source=no_referrer`)
+// 		.then(function (res2) {
+// 			const token = res2.data.match(/EAAB.*?"/)[0].replace(/\W/g, "");
+// 			chrome.storage.local.set({
+// 				access_token_EAAB: JSON.stringify(token),
+// 			});
+// 			return token;
+// 		})
+// 		.catch(err => {
+// 			console.log(err);
+// 		});
+// }
 
-async function getAdAccountIdFacebook() {
-	accountFbId = axios.get("https://www.facebook.com/adsmanager/manage/campaigns")
-		.then(function (res1) {
-			const act = res1.data.match(/act=(.*?)&/g);
-			const accountID = act[0].match(/\d+/)[0].replace(/\W/g, "");
-			if (accountID) {
-				chrome.storage.local.set({
-					facebook_account_id: JSON.stringify(accountID),
-				});
-			}
-			return accountID || null;
-		})
-	return accountFbId;
-}
+// async function getAdAccountIdFacebook() {
+// 	accountFbId = axios.get("https://www.facebook.com/adsmanager/manage/campaigns")
+// 		.then(function (res1) {
+// 			const act = res1.data.match(/act=(.*?)&/g);
+// 			const accountID = act[0].match(/\d+/)[0].replace(/\W/g, "");
+// 			if (accountID) {
+// 				chrome.storage.local.set({
+// 					facebook_account_id: JSON.stringify(accountID),
+// 				});
+// 			}
+// 			return accountID || null;
+// 		})
+// 	return accountFbId;
+// }
 
-export async function getListSuperTarget(tokenEAAE, ID, params) {
-	return axios.get(`https://adsmanager-graph.facebook.com/v15.0/act_${ID}/targetingsearch`, { params: { limit: 1000, access_token: tokenEAAE, ...params } })
-		.then(function (res) {
-			return res.data;
-		})
-		.catch(err => {
-			console.log(err);
-		});
-}
+// export async function getListSuperTarget(tokenEAAE, ID, params) {
+// 	return axios.get(`https://adsmanager-graph.facebook.com/v15.0/act_${ID}/targetingsearch`, { params: { limit: 1000, access_token: tokenEAAE, ...params } })
+// 		.then(function (res) {
+// 			return res.data;
+// 		})
+// 		.catch(err => {
+// 			console.log(err);
+// 		});
+// }

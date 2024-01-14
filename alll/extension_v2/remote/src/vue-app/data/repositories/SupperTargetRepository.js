@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { SupperTargetResource } from '../resources/SupperTarget.resource';
 
 const SupperTargetRepository = {
