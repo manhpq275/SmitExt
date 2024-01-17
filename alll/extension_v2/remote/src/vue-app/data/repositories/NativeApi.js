@@ -41,28 +41,19 @@ if (!window.getCookieNative) {
 }
 
 window.addEventListener('message', function(ev) {
-    // todo: add origin check
     if (!ev.data)
         return;
-
     var message;
     try {
         message = JSON.parse(ev.data);
     } catch (ex) {
         console.error(ex);
     }
-
-    // ignore messages not having a callback ID
     if (!message || !message.callbackId)
         return;
-
-    // we are the sender getting the callback
     if (callbacks[message.callbackId]) {
         callbacks[message.callbackId](message);
         delete callbacks[message.callbackId];
         return;
     }
-    // we are the receiver so we respond with the callback ID
-    // todo: restrict who can receive message (last param)
-    // iframe.contentWindow.postMessage(JSON.stringify(message), '*');
 });

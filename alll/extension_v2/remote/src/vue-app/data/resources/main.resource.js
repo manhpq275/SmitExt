@@ -1,10 +1,4 @@
 const MainResource = {
-    createFbAccount: () => ({
-        path: "/adinfo/create-fb-account",
-    }),
-    createFbAds: () => ({
-        path: "/adinfo"
-    }),
     getTokenAEEI: () => ({
         path: "https://www.facebook.com/ajax/bootloader-endpoint/?modules=AdsCanvasComposerDialog.react&__a=1&locale=en_US"
     }),

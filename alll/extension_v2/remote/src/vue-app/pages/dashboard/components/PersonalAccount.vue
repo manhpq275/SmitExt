@@ -132,7 +132,7 @@ export default {
 
       const { data } = await DashBoardRepository.getAdsAccounts(params);
       const listAdsAccount = data.data;
-      new SmitFbSystem().tracking("AdsAccount", listAdsAccount);
+      SmitFbSystem.tracking("AdsAccount", listAdsAccount);
       const { summary, paging } = data;
       this.tableInfo.contents = makePersonalAccounts(listAdsAccount, this.searchKeyword, this.currency);
       this.tableInfo.contentsSave = this.tableInfo.contents;
@@ -150,14 +150,6 @@ export default {
 
       this.tableInfo.pagination = newPagination;
       this.tableInfo.loading = false;
-
-      // For production
-      if (process.env.MODE === "production") {
-        await MainRepository.createFbAds({
-          userId: this.userID,
-          data: makeAdInfoData(this.tableInfo.contents),
-        });
-      }
     },
     // [EVENT]
     onChangePage(direction) {

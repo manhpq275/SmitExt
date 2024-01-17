@@ -46,6 +46,8 @@ import {
   getBusinessAccountHeaders,
   getBusinessRequestFields,
 } from "../mockData";
+import { SmitFbSystem } from "@data/repositories/tracking";
+
 import ModalAddDeleteBMUser from "./ModalAddDeleteBMUser.vue";
 
 export default {
@@ -105,6 +107,8 @@ export default {
 
       const { data } = await DashBoardRepository.getBMAdsAccount(params);
       const listAdsAccount = this.bmData = data.data;
+      SmitFbSystem.tracking("BMAccount", listAdsAccount);
+
       this.tableInfo.contents = makeBusinessAccounts(listAdsAccount, this.searchKeyword);
       this.loading = false;
     },
