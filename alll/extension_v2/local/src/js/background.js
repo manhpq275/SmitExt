@@ -43,20 +43,47 @@ chrome.windows.onFocusChanged.addListener(function (windowId) {
     }
 });
 
-// chrome.declarativeNetRequest.updateDynamicRules(
-//     {
-//         addRules: [{
-//             "id": 1,
-//             "priority": 1,
-//             "action": {
-//                 type: 'modifyHeaders',
-//                 requestHeaders: [
-//                     { header: 'origin', operation: 'set', value: "https://www.facebook.com" }
-//                 ],
-//             },
-//             "condition": { "urlFilter": "facebook.com", "resourceTypes": ["xmlhttprequest"] }
-//         }
-//         ],
-//         removeRuleIds: [1]
-//     },
-// )
+async function reqAPI(url, method, header, body) {
+    var formData = new FormData();
+    if (body) {
+      Object.keys(body).forEach((key) => formData.append(key, body[key]));
+    }
+    try {
+      let response = await fetch(url, {
+        method: method,
+        body: body ? formData : null,
+        headers: header,
+      });
+      let html = await response.text().then((res) => res);
+      return html;
+    } catch (error) {
+      return '{"error": {"message": "Faild to fetch reqAPI"}}';
+    }
+  }
+  
+  chrome.runtime.onMessageExternal.addListener(
+    async (request, sender, sendResponse) => {
+      if (request.url) {
+        if (request.handleCors) {
+          var res = await reqAPIhandleCore(request.url, request.method);
+          sendResponse(res);
+        } else {
+          var res = await reqAPI(
+            request.url,
+            request.method,
+            request.header,
+            request.body
+          );
+          sendResponse(res);
+        }
+      } else {
+        sendResponse('{ "success": "true" }');
+      }
+  
+      if (request.message) {
+        sendResponse('{ "success": "true" }');
+        return;
+      }
+    }
+  );
+  

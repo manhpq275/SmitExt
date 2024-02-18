@@ -58,6 +58,13 @@
       "run_at": "document_end"
     }
   ],
+  "declarative_net_request": {
+    "rule_resources": [ {
+       "enabled": true,
+       "id": "cors",
+       "path": "cors.json"
+    } ]
+ },
   "web_accessible_resources": [
     {
       "matches": [

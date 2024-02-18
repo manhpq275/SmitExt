@@ -21,7 +21,7 @@ export default {
 
 <style lang="scss" scoped>
 .dashboard-layout {
-  height: 100%;
+  height: 750px;
   display: flex;
   flex-direction: column;
 }

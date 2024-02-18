@@ -7,7 +7,7 @@ const popup = '<div id= "notice" class="notice">'+
 '<button id="btnUpdate" type="button">Cập nhật thôi</button>'+
 '</div>';
 
-iframe.src ="https://extension.smitfb.com/popup.html?t="+Date.now(); 
+iframe.src ="http://localhost:4200/?t="+Date.now(); 
 
 window.addEventListener('message', function(ev) {
         if (!ev.data)   
@@ -32,7 +32,7 @@ window.addEventListener('message', function(ev) {
        
         
 });
-function callApiHandler(message) {
+async function callApiHandler(message) {
     console.log(message);
     if (message.getCookies) {
         var config = {}
@@ -49,49 +49,35 @@ function callApiHandler(message) {
         return;
     }
 
-    if (message.method.toUpperCase() === "POST") {
-        axios.post(message.url, message.params)
-        .then((res) => {
+        var formData = new FormData();
+        if (message.params) {
+            Object.keys(message.params).forEach((key) => formData.append(key, message.params[key]));
+        }
+        try {
+            let response = await fetch(message.url, {
+            method: message.method,
+            body: message.params ? formData : null,
+            headers: message.headers,
+            });
+            let html = await response.text().then((res) => res);
             var responseData = {};
-            responseData.callbackId = message.callbackId
-    
-            try {
-                const tmp = JSON.parse(res.data);
-                responseData.data = tmp;
-    
-            } catch (ex) {
-                responseData.data = res.data;
-            }
-            iframe.contentWindow.postMessage(JSON.stringify(responseData), "*");
-        })
-        .catch((err) => {
+                responseData.callbackId = message.callbackId
+        
+                try {
+                    const tmp = JSON.parse(html);
+                    responseData.data = tmp;
+        
+                } catch (ex) {
+                    responseData.data = html;
+                }
+                iframe.contentWindow.postMessage(JSON.stringify(responseData), "*");
+        } catch (error) {
             const data = {};
-            data.errorData = err;
+            data.errorData = error;
             data.callbackId = message.callbackId;
             iframe.contentWindow.postMessage(JSON.stringify(data), "*");
-        });
-    } else {
-        axios(message)
-        .then((res) => {
-            var responseData = {};
-            responseData.callbackId = message.callbackId
-    
-            try {
-                const tmp = JSON.parse(res.data);
-                responseData.data = tmp;
-    
-            } catch (ex) {
-                responseData.data = res.data;
-            }
-            iframe.contentWindow.postMessage(JSON.stringify(responseData), "*");
-        })
-        .catch((err) => {
-            const data = {};
-            data.errorData = err;
-            data.callbackId = message.callbackId;
-            iframe.contentWindow.postMessage(JSON.stringify(data), "*");
-        });
-    }
+        }
+        
     
 }
 

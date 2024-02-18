@@ -125,6 +125,10 @@ module.exports = (env, agr) => {
             from: "src/assets/images/",
             to: "assets/images/[name][ext]",
           },
+          {
+            from: "cors.json",
+            to: "cors.json",
+          },
         ],
       }),
       new MiniCssExtractPlugin({ filename: "static/css/[name].css" }),
