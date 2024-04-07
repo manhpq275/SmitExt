@@ -1,0 +1,229 @@
+$width-common: 100%;
+
+:root {
+    @if $env =='smitfb' {
+        // SMIT
+        --bs-background-body-table: transparent;
+        --bs-wrapper: #1ca64d;
+        --bs-text-color: #1b9b48;
+        --bs-text-filter: #1b9b48;
+        --bs-text-header: #fff;
+        --bs-color-icon: #000;
+        --bs-db-header: #fff;
+        --bs-db-bg-form: #fff;
+        --bs-btn-switch-active: #fff;
+        --bs-bg-switch-group: #e9f3f6;
+        --bs-bg-routerlink: #1ca64d;
+        --bs-subtitle: #a6a6a6;
+        --bs-bg-role: #ebebeb;
+        --bs-bg-role-active: #fff;
+        --bs-text-role: #000;
+        --bs-border-role: rgba(0, 255, 78, .3);
+        --bs-checkbox-color: url('@images/role-input-true.svg');
+        --bs-scroll-normal: rgba(28, 166, 77, 0.5);
+        --bs-background-color: hsla(0, 0%, 100%, .7);
+        --bs-background-btn: hsla(0, 0%, 100%, .44);
+        --bs-background-btn-hover: hsla(0, 0%, 100%, .7);
+        --loading-btn: #ededed;
+        --bs-bg-btn-menu1: rgba(17, 199, 78, 0.6);
+        --bs-bg-btn-menu2: rgba(4, 133, 162, 0.6);
+        --bs-bg-modal: #fff;
+        --bs-bg-input: #fff;
+        --bs-border: #fff;
+        --bs-box-shadow: 0 0 0 2px rgba(246, 255, 0, 0.3);
+        --bs-image-header: url('@images/background-header.png');
+        --bs-image-bg: url('@images/theme.png');
+        --bs-image-logo: url("@images/adscheck-icon.svg");
+        --bs-image-sub-logo: url("@images/smit-logo.svg");
+        --bs-icon-sort: url('@images/thead-sort.svg');
+        --bs-btn-cm1: rgb(27, 155, 72);
+        --bs-btn-cm2: rgb(39, 179, 88);
+        --bs-btn-cm3: rgb(63, 197, 110);
+        --bs-width-logo-footer: 39px;
+        --bs-width-logo-menu: 60px;
+        --bs-tb-acc-bg: #E9F3F6;
+        --bs-table-border-color: rgba(230, 232, 236, .5);
+    }
+
+    @if $env =='baarun' {
+        //BAARUN
+        --bs-background-body-table: transparent;
+        --bs-wrapper: #b62793;
+        --bs-text-color: #b62793;
+        --bs-text-filter: #000;
+        --bs-text-header: #fff;
+        --bs-color-icon: #b62793;
+        --bs-db-header: #fff;
+        --bs-db-bg-form: #fff;
+        --bs-btn-switch-active: #fff;
+        --bs-bg-switch-group: #e9f3f6;
+        --bs-bg-routerlink: #b62793;
+        --bs-subtitle: rgb(197, 63, 193);
+        --bs-bg-role: #ebebeb;
+        --bs-bg-role-active: #fff;
+        --bs-text-role: #000;
+        --bs-border-role: #b62793;
+        --bs-checkbox-color: url('@images/input-true-br.svg');
+        --bs-scroll-normal: rgb(158, 69, 141);
+        --bs-background-color: hsla(0, 0%, 100%, .7);
+        --bs-background-btn: hsla(0, 0%, 100%, .44);
+        --bs-background-btn-hover: hsla(0, 0%, 100%, .7);
+        --loading-btn: #ededed;
+        --bs-bg-btn-menu1: rgba(199, 17, 178, 0.6);
+        --bs-bg-btn-menu2: rgba(162, 4, 101, 0.6);
+        --bs-bg-modal: #fff;
+        --bs-bg-input: #fff;
+        --bs-border: #b62793;
+        --bs-box-shadow: 0 0 0 2px rgba(246, 255, 0, 0.3);
+        --bs-image-header: hsla(0, 0%, 100%, 0.47);
+        --bs-image-bg: url('@images/pink-bg.jpeg');
+        --bs-image-logo: url("@images/Baarun2-01.png");
+        --bs-image-sub-logo: url("@images/baarunlogo2-01.png");
+        --bs-icon-sort: url('@images/thead-sort.svg');
+        --bs-btn-cm1: rgb(151, 27, 155);
+        --bs-btn-cm2: rgb(179, 39, 174);
+        --bs-btn-cm3: rgb(197, 63, 193);
+        --bs-width-logo-footer: 60px;
+        --bs-width-logo-menu: 120px;
+        --bs-tb-acc-bg: #E9F3F6;
+    }
+
+    @if $env =='cufads' {
+        // CUFADS
+        --bs-background-body-table: transparent;
+        --bs-wrapper: #ffc300;
+        --bs-text-color: #ffc300;
+        --bs-text-filter: #ffc300;
+        --bs-text-header: #ffc300;
+        --bs-color-icon: #ffc300;
+        --bs-db-header: #000;
+        --bs-db-bg-form: #c5c5c5;
+        --bs-bg-switch-group: #5e5e5e;
+        --bs-bg-routerlink: rgb(43, 43, 43);
+        --bs-subtitle: #5e5e5e;
+        --bs-bg-role: #5e5e5e;
+        --bs-bg-role-active: #fff;
+        --bs-text-role: #ffc300;
+        --bs-border-role: #ffc300;
+        --bs-checkbox-color: url('@images/input-true-gold.svg');
+        --bs-btn-switch-active: rgb(24, 24, 24);
+        --bs-scroll-normal: rgba(255, 229, 144, 0.5);
+        --bs-background-color: hsla(0, 0%, 50%, 0.7);
+        --bs-background-btn: hsla(0, 0%, 53%, 0.44);
+        --bs-background-btn-hover: hsla(0, 0%, 45%, 0.7);
+        --loading-btn: #c5c5c5;
+        --bs-bg-btn-menu1: #5e5e5e;
+        --bs-bg-btn-menu2: rgb(43, 43, 43);
+        --bs-bg-modal: #c5c5c5;
+        --bs-bg-input: #e5e5e5;
+        --bs-border: #ffc300;
+        --bs-box-shadow: 0 0 0 2px rgba(246, 255, 0, 0.3);
+        --bs-image-header: url('@images/header-CUFADS.jpeg');
+        --bs-image-bg: url('@images/bg-CUFADS.jpeg');
+        --bs-image-logo: url("@images/CUFADS.jpg");
+        --bs-image-sub-logo: url("@images/Cuf.png");
+        --bs-icon-sort: url('@images/thead-sort-CUFADS.svg');
+        --bs-btn-cm1: rgb(24, 24, 24);
+        --bs-btn-cm2: rgb(66, 66, 66);
+        --bs-btn-cm3: rgb(110, 110, 110);
+        --bs-width-logo-footer: 39px;
+        --bs-width-logo-menu: 60px;
+        --bs-tb-acc-bg: #E9F3F6;
+    }
+
+    @if $env =='focuzfb' {
+        //FOCUZ
+        --bs-background-body-table: transparent;
+        --bs-wrapper: #1f78c1;
+        --bs-text-color: #004d8c;
+        --bs-text-filter: #000;
+        --bs-text-header: #fff;
+        --bs-color-icon: #1f78c1;
+        --bs-db-header: #fff;
+        --bs-db-bg-form: #fff;
+        --bs-btn-switch-active: #fff;
+        --bs-bg-switch-group: #e9f3f6;
+        --bs-bg-routerlink: #1f78c1;
+        --bs-subtitle: rgb(79, 140, 184);
+        --bs-bg-role: #ebebeb;
+        --bs-bg-role-active: #fff;
+        --bs-text-role: #000;
+        --bs-border-role: #1f78c1;
+        --bs-checkbox-color: url('@images/input-true-focuz.svg');
+        --bs-scroll-normal: rgb(15, 102, 152);
+        --bs-background-color: hsla(0, 0%, 100%, .7);
+        --bs-background-btn: hsla(0, 0%, 100%, .44);
+        --bs-background-btn-hover: hsla(0, 0%, 100%, .7);
+        --loading-btn: #ededed;
+        --bs-bg-btn-menu1: rgba(4, 75, 116, 0.6);
+        --bs-bg-btn-menu2: rgba(0, 122, 216, 0.6);
+        --bs-bg-modal: #fff;
+        --bs-bg-input: #fff;
+        --bs-border: #1d73a9;
+        --bs-box-shadow: 0 0 0 2px rgba(246, 255, 0, 0.3);
+        --bs-image-header: url('@images/focuz-header-bg.png');
+        --bs-image-bg: url('@images/focuz-bg.png');
+        --bs-image-logo: url("@images/focuz-logo.jpg");
+        --bs-image-sub-logo: url("@images/focuz-sub-logo.png");
+        --bs-icon-sort: url('@images/thead-sort.svg');
+        --bs-btn-cm1: rgb(79, 140, 184);
+        --bs-btn-cm2: rgb(56, 109, 169);
+        --bs-btn-cm3: rgb(30, 48, 136);
+        --bs-width-logo-footer: 20px;
+        --bs-width-logo-menu: 30px;
+        --bs-tb-acc-bg: #E9F3F6;
+    }
+
+    @if $env =='jamfb' {
+        //JAM
+        --bs-background-body-table: transparent;
+        --bs-wrapper: #432788;
+        --bs-text-color: #362366;
+        --bs-text-filter: #000;
+        --bs-text-header: #fff;
+        --bs-color-icon: #361881;
+        --bs-db-header: #fff;
+        --bs-db-bg-form: #fff;
+        --bs-btn-switch-active: #fff;
+        --bs-bg-switch-group: #e9f3f6;
+        --bs-bg-routerlink: #4e26be;
+        --bs-subtitle: rgb(114, 79, 184);
+        --bs-bg-role: #ebebeb;
+        --bs-bg-role-active: #fff;
+        --bs-text-role: #000;
+        --bs-border-role: #362366;
+        --bs-checkbox-color: url('@images/input-true-br.svg');
+        --bs-scroll-normal: rgb(60, 15, 152);
+        --bs-background-color: hsla(0, 0%, 100%, .7);
+        --bs-background-btn: hsla(0, 0%, 100%, .44);
+        --bs-background-btn-hover: hsla(0, 0%, 100%, .7);
+        --loading-btn: #ededed;
+        --bs-bg-btn-menu1: rgba(47, 4, 116, 0.6);
+        --bs-bg-btn-menu2: rgba(83, 0, 216, 0.6);
+        --bs-bg-modal: #fff;
+        --bs-bg-input: #fff;
+        --bs-border: #432788;
+        --bs-box-shadow: 0 0 0 2px rgba(246, 255, 0, 0.3);
+        --bs-image-header: url('@images/jam-header.png');
+        --bs-image-bg: url('@images/jam-bg.jpeg');
+        --bs-image-logo: url("@images/Jam1-01.png");
+        --bs-image-sub-logo: url("@images/jam-sub-logo.png");
+        --bs-icon-sort: url('@images/thead-sort.svg');
+        --bs-btn-cm1: rgb(114, 79, 184);
+        --bs-btn-cm2: rgb(92, 56, 169);
+        --bs-btn-cm3: rgb(76, 30, 136);
+        --bs-width-logo-footer: 39px;
+        --bs-width-logo-menu: 60px;
+        --bs-tb-acc-bg: #E9F3F6;
+    }
+
+    // --bs-wrapper: #070c09;
+    // --bs-wrapper: #1ca64d;
+    // --bs-wrapper: #432788;
+    // --bs-wrapper: #961ca6;
+
+    // --bs-text-color: #07160c;
+    // --bs-text-color: #1b9b48;
+    // --bs-text-color: #362366;
+    // --bs-text-color: #961ca6;
+}

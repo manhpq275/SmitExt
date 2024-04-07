@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "module": "CommonJS",
+        "target": "ES6",
+        "baseUrl": ".",
+        "paths": {
+            "@fonts/*": ["src/assets/fonts/*"],
+            "@images/*": ["src/assets/images/*"],
+            "@styles/*": ["src/assets/styles/*"]
+        }
+    },
+    "include": [
+        "src/**/*"
+    ]
+}
