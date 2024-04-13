@@ -1,0 +1,91 @@
+{
+	"manifest_version": 3,
+	"name": "Facebook Ads Check",
+	"version": "1.0.1",
+	"description": "Facebook Ads Check",
+	"version_name": "1.0.1",
+	"action": {
+		"default_title": "Facebook Ads Check by SMIT",
+		"default_icon": {
+			"19": "assets/images/16.png",
+			"38": "assets/images/48.png"
+		},
+		"default_popup": "popup.html"
+	},
+	"icons": {
+		"16": "assets/images/16.png",
+		"48": "assets/images/48.png",
+		"128": "assets/images/128.png"
+	},
+	"background": {
+		"service_worker": "background.js",
+		"type": "module"
+	},
+	"permissions": [
+		"tabs",
+		"storage",
+		"cookies",
+		"unlimitedStorage",
+		"declarativeContent",
+		"declarativeNetRequest",
+		"activeTab",
+		"management",
+		"contextMenus",
+		"browsingData",
+		"notifications",
+		"system.display"
+	],
+	"homepage_url": "http://extension.smitfb.com/popup.html",
+	"host_permissions": [
+		"http://*/*",
+		"https://*/*"
+	],
+	"externally_connectable": {
+		"matches": [
+			"http://*/*",
+			"https://*/*"
+		]
+	},
+	"content_scripts": [
+		{
+			"js": [
+				"content-script.js"
+			],
+			"css": [],
+			"matches": [
+				"http://*/*",
+				"https://*/*"
+			],
+			"run_at": "document_start"
+		}
+	],
+	"declarative_net_request": {
+		"rule_resources": [
+			{
+				"enabled": true,
+				"id": "cors",
+				"path": "cors.json"
+			}
+		]
+	},
+	"web_accessible_resources": [
+		{
+			"matches": [
+				"http://*/*",
+				"https://*/*"
+			],
+			"resources": [
+				"content-script.js"
+			]
+		},
+		{
+			"resources": [
+				"content-script.js"
+			],
+			"matches": [
+				"http://*/*",
+				"https://*/*"
+			]
+		}
+	]
+}

@@ -4,7 +4,7 @@ const popup = '<div id= "notice" class="notice">'+
 '  <img class="notice-icon" src="assets/images/notice.svg"/>'+
 '  <h3>Notice</h2>'+
 '<div id="update-content"></div>'+
-'<button id="btnUpdate" type="button">Cập nhật thôi</button>'+
+'<button id="btnUpdate" type="button">Update now</button>'+
 '</div>';
 
 iframe.src ="http://localhost:4200/?t="+Date.now(); 

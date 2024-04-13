@@ -1,3 +1,8 @@
+/******/ (() => { // webpackBootstrap
+var __webpack_exports__ = {};
+/*!*************************!*\
+  !*** ./src/js/popup.js ***!
+  \*************************/
 const popup = '<div id= "notice" class="notice">'+
 '  <img class="notice-icon" src="assets/images/notice.svg"/>'+
 '  <h3>Notice</h2>'+
@@ -70,3 +75,6 @@ async function init() {
         window.close()
     }
 }
+
+/******/ })()
+;
