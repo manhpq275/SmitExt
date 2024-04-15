@@ -88,7 +88,7 @@ export default {
 
     const logIn = async () => {
       $v.value.$touch();
-      console.log($v);
+      //console.log($v);
       if ($v.value.$invalid) return;
 
       const $toast = useToast();

@@ -7,15 +7,15 @@ export default {
     },
     mutations: {
         LOGIN_SUCCESS(state, payload) {
-            console.log("LOGIN_SUCCESS");
+            //console.log("LOGIN_SUCCESS");
             state.isAuth = true;
         },
         LOGIN_FAIL(state, payload) {
-            console.log("LOGIN_FAIL");
+            //console.log("LOGIN_FAIL");
             state.isAuth = false;
         },
         LOGOUT(state, payload) {
-            console.log("LOGOUT");
+            //console.log("LOGOUT");
             state.isAuth = false;
         },
     },

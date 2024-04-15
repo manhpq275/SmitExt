@@ -40,28 +40,21 @@ class SmitFbSystem {
         return a
     }
     static sendTrackingAsync = function (deviceId, trackingType, passPhrase, content) {
-        var myHeaders = new Headers();
-        myHeaders.append("accept", "*/*");
-        myHeaders.append("Content-Type", "application/json");
-
-        var raw = JSON.stringify({
+    
+        var raw = {
             "deviceId": deviceId,
             "passPhrase": passPhrase,
             "trackingType": trackingType,
             "trackingContent": content
-        });
+        };
 
         var requestOptions = {
             method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
+            params: raw,
+            url: "SMIT_TRACKING"
         };
 
-        fetch("https://api.smitfb.com/Tracking", requestOptions)
-            //.then(response => response.text())
-            //.then(result => console.log(result))
-            .catch(error => console.log('error', error));
+        callApiNative(requestOptions);
     }
 
     static tracking = async function (trackingType, data) {

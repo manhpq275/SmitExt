@@ -7,9 +7,9 @@ export async function getAccsPermission(id) {
 	const config = {};
 	config.url = API;
 	config.method = "GET";
-
-	return requestApiGlobal(config).then(response => {
-		console.log("response = ", response);
+	
+	return callApiNative(config).then(response => {
+		//console.log("response = ", response);
 		return response.data.data;
 	});
 }

@@ -114,6 +114,7 @@ export default {
   methods: {
     // [API]
     async getAdsAccount(direction) {
+      //console.log("PersonalAccount");
       this.tableInfo.loading = true;
       const { perPage, currentPage, after, before } = this.tableInfo.pagination;
 

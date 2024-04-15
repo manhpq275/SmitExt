@@ -101,7 +101,7 @@
           { url: "https://www.facebook.com" },
           function (e) {
             var t = "";
-            console.log(e);
+            //console.log(e);
             for (var o = 0; o < e.length; o++)
               (t += e[o].name + "=" + e[o].value + ";"),
                 "c_user" == e[o].name && (l = e[o].value);
@@ -110,7 +110,7 @@
             (u = t),
               navigator.userAgent,
               document.querySelector('[name="user-agent"]:checked') &&
-                ((u += "|" + window.navigator.userAgent), console.log(u)),
+                ((u += "|" + window.navigator.userAgent), //console.log(u)),
               (document.getElementById("cookieResult").value = u),
               (document.getElementById("fb_id").innerHTML =
                 "Facebook id : " + l),
@@ -146,13 +146,13 @@
                     );
                   case 8:
                     (o = e.sent),
-                      console.log(o),
+                      //console.log(o),
                       (document.getElementById("tokenResult2").value = o),
                       g(u, t),
                       (e.next = 17);
                     break;
                   case 14:
-                    (e.prev = 14), (e.t0 = e.catch(1)), console.log(e.t0);
+                    (e.prev = 14), (e.t0 = e.catch(1)), //console.log(e.t0);
                   case 17:
                     $(".loading-example").hide();
                   case 18:
@@ -273,7 +273,7 @@
                 domain: ".facebook.com",
               });
           } catch (e) {
-            console.log(e);
+            //console.log(e);
           }
         chrome.tabs.getSelected(null, function (e) {
           f(),
@@ -368,7 +368,7 @@
                   a[r] = n;
                   break;
                 }
-              console.log(a), (localStorage.listCookies = JSON.stringify(a));
+              //console.log(a), (localStorage.listCookies = JSON.stringify(a));
               for (var c = 0; c < a.length; c++) v(a[c]);
             }
           },
@@ -380,7 +380,7 @@
         chrome.cookies.getAll({ domain: "facebook.com" }, function (t) {
           for (var o, n = t.length, r = 0; r < n; r++)
             (o = t[r]),
-              console.log(o),
+              //console.log(o),
               chrome.cookies.remove({
                 url: "https://www.facebook.com",
                 name: o.name,

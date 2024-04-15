@@ -9,7 +9,7 @@ const FacebookRepository = {
             params: params,
             withCredentials: true
         }
-        return requestApiGlobal(config);
+        return callApiNative(config);
 
         //return axios.get(resource.path, { params, withCredentials: true });
     },
@@ -21,7 +21,7 @@ const FacebookRepository = {
             params: params,
             withCredentials: true
         }
-        return requestApiGlobal(config);
+        return callApiNative(config);
     },
 }
 

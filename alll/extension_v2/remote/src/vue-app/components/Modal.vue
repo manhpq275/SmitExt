@@ -48,13 +48,13 @@ export default {
   methods: {
     showModalConfirm() {
       const modal = new bootstrap.Modal("#infoModal");
-      // console.log("modal = ", this.$refs.infoModal, modal)
+      // //console.log("modal = ", this.$refs.infoModal, modal)
       modal.show();
     },
   },
   watch: {
     modalId(newVal) {
-      console.log("modalId = ", newVal);
+      //console.log("modalId = ", newVal);
     },
   },
 };

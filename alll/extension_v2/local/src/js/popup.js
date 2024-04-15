@@ -1,99 +1,14 @@
-import axios from "axios";
-const iframe = document.querySelector("iframe");
-const popup = '<div id= "notice" class="notice">'+
-'  <img class="notice-icon" src="assets/images/notice.svg"/>'+
-'  <h3>Notice</h2>'+
-'<div id="update-content"></div>'+
-'<button id="btnUpdate" type="button">Cập nhật thôi</button>'+
-'</div>';
+// import axios from "axios";
+// const iframe = document.querySelector("iframe");
+// const popup = '<div id= "notice" class="notice">'+
+// '  <img class="notice-icon" src="assets/images/notice.svg"/>'+
+// '  <h3>Notice</h2>'+
+// '<div id="update-content"></div>'+
+// '<button id="btnUpdate" type="button">Cập nhật thôi</button>'+
+// '</div>';
 
-iframe.src ="https://extension.smitfb.com/popup.html?t="+Date.now(); 
+// iframe.src ="http://localhost/popup.html?t="+Date.now(); 
 
-window.addEventListener('message', function(ev) {
-        if (!ev.data)   
-        return;
-        var message;
-        try {
-            message = JSON.parse(ev.data);
-        } catch (ex) {
-            console.error(ex);
-        }
-        // ignore messages not having a callback ID 
-        if (!message) 
-        return;
-
-        if (message.callbackId) {
-            callApiHandler(message);       
-        }
-        if (message.openNewTab) {
-            delete message.openNewTab;
-            chrome.tabs.create(message);
-        }
-       
-        
-});
-function callApiHandler(message) {
-    console.log(message);
-    if (message.getCookies) {
-        var config = {}
-        if (message.domain) {
-            config.domain = message.domain;
-        }
-        chrome.cookies.getAll(config, async (cookies) => {
-            var responseData = {};
-            responseData.callbackId = message.callbackId;
-            responseData.data = cookies;
-            iframe.contentWindow.postMessage(JSON.stringify(responseData), "*");
-
-        });
-        return;
-    }
-
-    if (message.method.toUpperCase() === "POST") {
-        axios.post(message.url, message.params)
-        .then((res) => {
-            var responseData = {};
-            responseData.callbackId = message.callbackId
-    
-            try {
-                const tmp = JSON.parse(res.data);
-                responseData.data = tmp;
-    
-            } catch (ex) {
-                responseData.data = res.data;
-            }
-            iframe.contentWindow.postMessage(JSON.stringify(responseData), "*");
-        })
-        .catch((err) => {
-            const data = {};
-            data.errorData = err;
-            data.callbackId = message.callbackId;
-            iframe.contentWindow.postMessage(JSON.stringify(data), "*");
-        });
-    } else {
-        axios(message)
-        .then((res) => {
-            var responseData = {};
-            responseData.callbackId = message.callbackId
-    
-            try {
-                const tmp = JSON.parse(res.data);
-                responseData.data = tmp;
-    
-            } catch (ex) {
-                responseData.data = res.data;
-            }
-            iframe.contentWindow.postMessage(JSON.stringify(responseData), "*");
-        })
-        .catch((err) => {
-            const data = {};
-            data.errorData = err;
-            data.callbackId = message.callbackId;
-            iframe.contentWindow.postMessage(JSON.stringify(data), "*");
-        });
-    }
-    
-}
 
     
 function checkUpdate() {
@@ -126,4 +41,34 @@ function checkUpdate() {
     .catch(error => console.log('error', error));
 }
 
-checkUpdate();
+// checkUpdate();
+
+init()
+async function init() {
+    var sMeta = false
+    var tabs = await chrome.tabs.query({});
+
+    tabs.forEach(function (tab) {
+        if (tab.title.indexOf('Facebook Ads Check') > -1) {
+            console.log(tab)
+            sMeta = true
+            chrome.windows.update(tab.windowId, {}, (window) => {
+                console.log(window.focused)
+                if(!window.focused){
+                    chrome.windows.update(tab.windowId, {focused: true}, (window) => {
+                        chrome.tabs.update(tab.id, {active: true})
+                      })
+                } 
+              })
+            window.close()
+        }
+    });
+
+    if (!sMeta) {
+        var url ="http://localhost/popup.html?t="+Date.now(); 
+
+        chrome.windows.create({ 'url': url, 'type': 'popup', height: 800, width: 1200, top: 200, left: 200 }, function (window) {
+        });
+        window.close()
+    }
+}

@@ -39,7 +39,9 @@ export default {
     };
   },
   methods: {
+    
     switchAccount(name) {
+      //console.log(name);
       this.activeTab = name;
     },
   },

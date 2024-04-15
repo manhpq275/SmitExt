@@ -57,7 +57,7 @@ export default {
 
     const changePassword = () => {
       $v.value.$touch();
-      // console.log("userLogin = ", currentPass.value);
+      // //console.log("userLogin = ", currentPass.value);
       // if (
       //   !changePassInfo.currentPass ||
       //   !changePassInfo.changePass ||

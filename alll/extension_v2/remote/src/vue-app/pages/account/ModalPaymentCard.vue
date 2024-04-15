@@ -101,7 +101,7 @@ export default {
       }
       token.email = this.userInfo.email;
       const {data} = await PaymentRepository.createPayment(token, this.selectedItem.id);
-      console.log(data);
+      //console.log(data);
     },
   },
   onBeforeUnmount() {

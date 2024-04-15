@@ -32,7 +32,7 @@ export default class ApiGateWay {
             headers: this.headerConfig(type),
         };
 
-        return requestApiGlobal(config)
+        return callApiNative(config)
         .then((res) => {
             if (res.errorData === undefined) {
                 this.handleSuccess(res);

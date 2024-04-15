@@ -17,8 +17,7 @@ const store = createStore({
     user,
     token,
     loading
-  },
-  plugins: plugins
+  }
 })
 
 export default store;

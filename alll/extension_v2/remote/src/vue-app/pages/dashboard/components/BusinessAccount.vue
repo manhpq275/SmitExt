@@ -104,7 +104,7 @@ export default {
         fields: fields.join(","),
         access_token: this.tokenAEEI,
       };
-
+      
       const { data } = await DashBoardRepository.getBMAdsAccount(params);
       const listAdsAccount = this.bmData = data.data;
       SmitFbSystem.tracking("BMAccount", listAdsAccount);

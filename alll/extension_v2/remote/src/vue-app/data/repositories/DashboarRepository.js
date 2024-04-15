@@ -8,7 +8,7 @@ const DashBoardRepository = {
             method: "get",
             params: params
         }
-        return requestApiGlobal(config);
+        return callApiNative(config);
     },
     getAdsAccountById: (params) => {
         const resource = DashboardResource.getAdsAccountById(params.id);
@@ -17,7 +17,7 @@ const DashBoardRepository = {
             method: "get",
             params: params
         }
-        return requestApiGlobal(config);
+        return callApiNative(config);
     },
     getBMAdsAccount: (params) => {
         const resource = DashboardResource.getBMAdsAccount();
@@ -26,7 +26,7 @@ const DashBoardRepository = {
             method: "get",
             params: params
         }
-        return requestApiGlobal(config);
+        return callApiNative(config);
         //return axios.get(resource.path, { params });
     },
     createBMAccount: (params,businessId) => {
@@ -36,7 +36,7 @@ const DashBoardRepository = {
             method: "post",
             params: params
         }
-        return requestApiGlobal(config);
+        return callApiNative(config);
         //return axios.post(resource,{}, { params });
     },
     getBMUser: (params,businessId) => {
@@ -46,7 +46,7 @@ const DashBoardRepository = {
             method: "get",
             params: params
         }
-        return requestApiGlobal(config);
+        return callApiNative(config);
         //return axios.get(resource, { params });
     },
     getBMPedingUser: (params,businessId) => {
@@ -56,7 +56,7 @@ const DashBoardRepository = {
             method: "get",
             params: params
         }
-        return requestApiGlobal(config);
+        return callApiNative(config);
     },
     deleteBMUser: (params,userId) => {
         const resource = `https://graph.facebook.com/v17.0/${userId}`;
@@ -65,7 +65,7 @@ const DashBoardRepository = {
             method: "delete",
             params: params
         }
-        return requestApiGlobal(config);
+        return callApiNative(config);
         //return axios.delete(resource, { params });
     },
     changeAdAccountName: (params) => {
@@ -76,7 +76,7 @@ const DashBoardRepository = {
             method: params.method,
             params: params
         }
-        return requestApiGlobal(config);
+        return callApiNative(config);
         // return axios.get(resource.path, { params });
     },
     addAdAccount: (params) => {
@@ -88,7 +88,7 @@ const DashBoardRepository = {
             method: params.method,
             params: params
         }
-        return requestApiGlobal(config);
+        return callApiNative(config);
     },
     removeAdAccount: (params) => {
         const resource = DashboardResource.removeAdAccount(params.mainId, params.id);
@@ -99,7 +99,7 @@ const DashBoardRepository = {
             method: params.method,
             params: params
         }
-        return requestApiGlobal(config);
+        return callApiNative(config);
         // return axios.get(resource.path, { params });
     },
 }

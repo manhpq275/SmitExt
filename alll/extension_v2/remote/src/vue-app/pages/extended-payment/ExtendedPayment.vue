@@ -292,7 +292,7 @@ export default {
   },
   methods:{
     saveData(){
-      console.log("quillContent = ", this.quillContent)
+      //console.log("quillContent = ", this.quillContent)
     }
   }
 };

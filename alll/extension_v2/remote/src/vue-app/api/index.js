@@ -37,7 +37,7 @@ export async function getFacebookAct(ACCESS_TOKEN, FACEBOOK_ID, number, link = '
 		const config = {}
 		config.url = API_FB;
 		config.method = "GET"
-		return requestApiGlobal(config);
+		return callApiNative(config);
 	}))
 	const { paging, summary } = LIST_ACCOUNT_AD
 	const LIST = data.map(el => {
@@ -56,7 +56,7 @@ export async function getFacebookAct(ACCESS_TOKEN, FACEBOOK_ID, number, link = '
 
 export async function getFacebookBMAcc(ACCESS_TOKEN, number = 50) {
 	const LIST_BM_AD = (await getListBMsAd(ACCESS_TOKEN, number)).data.data;
-	console.log("LIST_BM_AD = ", LIST_BM_AD)
+	//console.log("LIST_BM_AD = ", LIST_BM_AD)
 	const fb_dtsg = localStorage.getItem('fb_dtsg')
 	const lsd = localStorage.getItem('lsd')
 	const data = await Promise.all(LIST_BM_AD.map(el => {
@@ -64,9 +64,9 @@ export async function getFacebookBMAcc(ACCESS_TOKEN, number = 50) {
 		const config = {}
 		config.url = API_FB;
 		config.method = "GET"
-		return requestApiGlobal(config)	}))
+		return callApiNative(config)	}))
 	// const dataArr = await getAllRoleAccsWithBMAcc(LIST_BM_AD[0].id, fb_dtsg, lsd);
-	// console.log("dataArr = ", dataArr)
+	// //console.log("dataArr = ", dataArr)
 	// const adAccountLimitArr = data.map(el => JSON.parse(el.data.match(/{"adAccountLimit(.*?)}/g)[0]));
 	return LIST_BM_AD.map((el, index) => {
 		return {
@@ -84,12 +84,12 @@ export async function changePermissionForAcc(accId, uidArr, roleId) {
 		config.url = API;
 		config.method = "GET"
 
-		return requestApiGlobal(config)
+		return callApiNative(config)
 			.then(response => {
 				return { uid, success: true, message: 'Success!' };
 			})
 			.catch(error => {
-				console.log("error message = ", error,)
+				//console.log("error message = ", error,)
 				const errObj = error.response.data.error
 				return { uid, success: false, message: errObj.error_user_title || errObj.message };
 			})
@@ -99,17 +99,17 @@ export async function changePermissionForAcc(accId, uidArr, roleId) {
 export async function removePermissionAccount(accId, uidArr) {
 	const token = await readChromeLocalStorage("access_token_EAAI");
 	return Promise.all(uidArr.map(async uid => {
-		console.log("uidArr = ", uidArr, ", uid = ", uid)
+		//console.log("uidArr = ", uidArr, ", uid = ", uid)
 		const API = `https://graph.facebook.com/v14.0/act_${accId}/users/${uid}?method=DELETE&access_token=${token}&locale=en_US`
 		const config = {}
 		config.url = API;
 		config.method = "GET"
-		return requestApiGlobal(config)
+		return callApiNative(config)
 			.then(response => {
 				return { uid, success: true, message: 'Success!' };
 			})
 			.catch(error => {
-				console.log("error message = ", error,)
+				//console.log("error message = ", error,)
 				const errObj = error.response.data.error
 				return { uid, success: false, message: errObj.error_user_title || errObj.message };
 			})
@@ -122,7 +122,7 @@ async function getListIDAccountsAd(id, token, num, link) {
 	const config = {}
 	config.url = API;
 	config.method = "GET"
-	return requestApiGlobal(config)
+	return callApiNative(config)
 		.then(response => {
 			if (response?.data?.data?.length > 0) {
 				const data = response.data.data.map(el => {
@@ -158,14 +158,14 @@ export async function getListBMsAd(token, num = 50) {
 	client_ad_accounts.summary(1),
 	owned_ad_accounts.summary(1)&limit=${num}&access_token=${token}&locale=en_US`;
 	config.method = "GET"
-	return requestApiGlobal(config);
+	return callApiNative(config);
 }
 
 export async function getTokenEAAI() {
 	const config = {}
 	config.url = "https://www.facebook.com/ajax/bootloader-endpoint/?modules=AdsCanvasComposerDialog.react&__a=1"
 	config.method = "GET"
-	return requestApiGlobal(config).then(async (res) => {
+	return callApiNative(config).then(async (res) => {
 			const token = res.data.match(/"access_token":"EAAI.*?"/)[0].replace(/\W/g, "").replace("access_token", "");
 			const FACEBOOK_ID = await getAccountIdFacebook(token)
 			chrome.storage.local.set({
@@ -177,7 +177,7 @@ export async function getTokenEAAI() {
 			return token;
 		})
 		.catch(function (error) {
-			console.log("error = ", error);
+			//console.log("error = ", error);
 		});
 }
 
@@ -185,7 +185,7 @@ export async function getAccountIdFacebook(accessToken) {
 	const config = {}
 	config.url = `https://graph.facebook.com/me?fields=id&access_token=${accessToken}`
 	config.method = "GET"
-	return await requestApiGlobal(config).data.id;
+	return await callApiNative(config).data.id;
 }
 
 export async function changeAccountName(id, name) {
@@ -194,8 +194,8 @@ export async function changeAccountName(id, name) {
 		const config = {}
 		config.url = `https://graph.facebook.com/v14.0/act_${id}?name=${name}&method=post&access_token=${token}&locale=en_US`
 		config.method = "GET"
-		let data = await requestApiGlobal(config);
-		console.log("data call API = ", data)
+		let data = await callApiNative(config);
+		//console.log("data call API = ", data)
 		return data
 	}
 	catch (error) {
@@ -207,7 +207,7 @@ export async function getFbDTSG() {
 	const config = {}
 	config.url = "https://business.facebook.com/accountquality/?landing_page=overview";
 	config.method = "GET"
-	return requestApiGlobal(config)
+	return callApiNative(config)
 		.then(async (res) => {
 			const act = [...new Set(res.data.match(/"token":"(.*?)"/g))];
 			const access_token = res.data.match(/EAAE.*?"/)[0].replace(/\W/g, "");
@@ -228,7 +228,7 @@ async function getRateCurrency() {
 	config.method = "GET"
 
 	const response = await Promise.all(CURRENCIES.map(el => {
-		return requestApiGlobal(config);
+		return callApiNative(config);
 	}))
 	const currency_rate = {
 		"usd_rate": response[0].data.data.rates,
@@ -244,9 +244,9 @@ export async function getAllRoleAccsWithBMAcc(bmId, fb_dtsg, lsd) {
 	const config = {}
 	config.url = API;
 	config.method = "GET"
-	const data1 = await requestApiGlobal(config)
+	const data1 = await callApiNative(config)
 		.then(response => {
-			console.log("getAllRoleAccsWithBMAcc = ", bmId, ": ", response.data.data)
+			//console.log("getAllRoleAccsWithBMAcc = ", bmId, ": ", response.data.data)
 			return response?.data?.data || [];
 		})
 	const dataGra = {
@@ -268,7 +268,7 @@ export async function getAllRoleAccsWithBMAcc(bmId, fb_dtsg, lsd) {
 		data: form_data1
 	})
 		.then(response => {
-			console.log("response Graph = ", response)
+			//console.log("response Graph = ", response)
 			return response;
 		})
 	const data = {
@@ -293,8 +293,8 @@ export async function getAllRoleAccsWithBMAcc(bmId, fb_dtsg, lsd) {
 		.then(response => {
 			return response.data
 		})
-	console.log("https://graph.facebook.com/v14.0 = ", data1)
-	console.log("https://www.facebook.com/api/graphql = ", JSON.parse(data2.match(/{.*}/g)[0]))
+	//console.log("https://graph.facebook.com/v14.0 = ", data1)
+	//console.log("https://www.facebook.com/api/graphql = ", JSON.parse(data2.match(/{.*}/g)[0]))
 	return 1;
 }
 
@@ -311,7 +311,7 @@ export async function getAllRoleAccsWithBMAcc(bmId, fb_dtsg, lsd) {
 // 			return token;
 // 		})
 // 		.catch(err => {
-// 			console.log(err);
+// 			//console.log(err);
 // 		});
 // }
 
@@ -336,6 +336,6 @@ export async function getAllRoleAccsWithBMAcc(bmId, fb_dtsg, lsd) {
 // 			return res.data;
 // 		})
 // 		.catch(err => {
-// 			console.log(err);
+// 			//console.log(err);
 // 		});
 // }

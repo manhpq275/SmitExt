@@ -1,22 +1,47 @@
-var callbacks = {};
+const editorExtensionId = 'dgnipnkdlcjoicnhlpjhejbhgichblkf'
 if (!window.callApiNative) {
-    window.callApiNative = function(data, callback) {
-        data.callbackId = Math.random();
-        callbacks[data.callbackId] = callback;
-        window.parent.postMessage(JSON.stringify(data), "*");
-    }
-}
-if (!window.requestApiGlobal) {
-    window.requestApiGlobal = function(config) {
-        return new Promise((resolve)=>{
-            window.callApiNative(config, (data)=>{
-                resolve(data);
+    window.callApiNative = async function(data) {
+        if (data.getCookies) {
+            const response = await new Promise((resolve, reject) => {
+                chrome.runtime.sendMessage(
+                  editorExtensionId,
+                  data,
+                  resolve
+                )
+            });
+           
+            return response;
+        } else {
+            var method = data.method;
+            var url = data.url;
+            var body = data.params;
+            const response = await new Promise((resolve, reject) => {
+                chrome.runtime.sendMessage(
+                  editorExtensionId,
+                  {
+                    method,
+                    url,
+                    body
+                  },
+                  resolve
+                )
+            });
+            var responseObject = JSON.parse(response);
+            if (responseObject.data) {
+                var n;
+                try {
+                    n = JSON.parse(responseObject.data)
+                } catch (e) {
+                    //console.log(e);
+                }
+                if (n)
+                    return n;
             }
-            )
+            return responseObject;
         }
-        );
     }
 }
+
 
 if (!window.openNewTab) {
     window.openNewTab = function(config) {
@@ -26,7 +51,7 @@ if (!window.openNewTab) {
 }
 if (!window.getCookieNative) {
     window.getCookieNative = function(source) {
-        console.log(source);
+        //console.log(source);
         const config = {};
         config.getCookies = true;
         config.domain = ".facebook.com";
@@ -39,21 +64,3 @@ if (!window.getCookieNative) {
         );
     }
 }
-
-window.addEventListener('message', function(ev) {
-    if (!ev.data)
-        return;
-    var message;
-    try {
-        message = JSON.parse(ev.data);
-    } catch (ex) {
-        console.error(ex);
-    }
-    if (!message || !message.callbackId)
-        return;
-    if (callbacks[message.callbackId]) {
-        callbacks[message.callbackId](message);
-        delete callbacks[message.callbackId];
-        return;
-    }
-});

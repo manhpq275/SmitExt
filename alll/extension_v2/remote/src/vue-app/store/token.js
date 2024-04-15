@@ -82,13 +82,22 @@ export default {
                 const dialects_to_locales = data.match(/"dialects_to_locales":{.*?}/)[0].replace(`"dialects_to_locales":`, "");
                 const localizedNamesForDialects = data.match(/"localizedNamesForDialects":{.*?}/)[0].replace(`"localizedNamesForDialects":`, "");
                 const dynamicAdsCurrenciesByCode = data.match(/"dynamicAdsCurrenciesByCode":{.*?}}/)[0].replace(`"dynamicAdsCurrenciesByCode":`, "");
+                const dataToken = {};
+                dataToken.token = token;
+                dataToken.adAccountID = adAccountID;
+                dataToken.adsCurrenciesByCode = adsCurrenciesByCode;
+                dataToken.dynamicAdsCurrenciesByCode = dynamicAdsCurrenciesByCode;
+                dataToken.localizedNamesForDialects = localizedNamesForDialects;
+                dataToken.dialects_to_locales = dialects_to_locales;
+                //console.log("Get Token EAAI");
+                //console.log(dataToken);
                 context.commit('SET_TOKEN_EAAI', token);
                 context.commit('SET_ACCOUNT_ID', adAccountID);
                 context.commit('SET_CURRENCY', adsCurrenciesByCode);
                 context.commit('SET_DYNAMIC_CURRENCY', dynamicAdsCurrenciesByCode);
                 context.commit('SET_LOCALE', { localizedNamesForDialects, dialects_to_locales });
             } catch (error) {
-                console.log(error);
+                //console.log(error);
                // context.commit('SET_LOGIN_FB', false);
             }
         },
@@ -99,7 +108,7 @@ export default {
                 const token = data.match(/EAAB.*?"/)[0].replace(/\W/g, "");
                 context.commit('SET_TOKEN_EAAB', token)
             } catch (error) {
-                console.log(error);
+                //console.log(error);
               //  context.commit('SET_LOGIN_FB', false);
             }
         },
@@ -126,7 +135,7 @@ export default {
                 context.commit('SET_IS_FETCH_EAAG', true);
 
             } catch (error) {
-                console.log(error);
+                //console.log(error);
                // context.commit('SET_LOGIN_FB', false);
             }
         },
@@ -151,7 +160,7 @@ export default {
                 }
                 context.commit('SET_CURRENCY_RATE', listCurrecyRate);
             } catch (error) {
-                console.log(error);
+                //console.log(error);
             }
         }
     }

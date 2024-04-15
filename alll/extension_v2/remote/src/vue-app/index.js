@@ -31,13 +31,6 @@ import "../assets/styles/index.scss";
 import "@data/repositories/NativeApi.js";
 
 Config.initConfig();
-
-    AuthRepository.checkAuthentication().then((response) => {
-      store.dispatch('LOGIN_SUCCESS', {})
-      store.dispatch('SET_USER_INFO', response.data)
-    }).catch((error)=> {
-      store.dispatch('LOGIN_FAIL', {})
-    })
     const i18n = configLocalization();
     const language = store.getters.getUserLanguage;
     const emitter = mitt();
