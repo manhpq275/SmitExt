@@ -45,8 +45,7 @@ if (!window.callApiNative) {
 
 if (!window.openNewTab) {
     window.openNewTab = function(config) {
-        config.openNewTab = true;
-        window.parent.postMessage(JSON.stringify(config), "*");
+        window.open(config.url);
     }
 }
 if (!window.getCookieNative) {

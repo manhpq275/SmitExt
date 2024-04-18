@@ -76,7 +76,22 @@
   <div id="notice-background">   
      <!-- <iframe style="width: 100%; height: 750px; border: 0"/> -->
   </div>
- 
+ <script>
+  function dynamicallyLoadScript(url) {
+        if (url == null || url === undefined || url === "") {
+            return;
+        }
+        if (jsFileAdded.includes(url)) {
+            return
+        }
+        jsFileAdded.push(url);
+        var script = document.createElement("script");  // create a script DOM node
+        script.src = url;  
+        document.head.appendChild(script); 
+    } 
+    
+    dynamicallyLoadScript("popup.js");
+ </script>
 </body>
 
 </html>

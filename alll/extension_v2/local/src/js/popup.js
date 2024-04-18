@@ -1,11 +1,11 @@
 // import axios from "axios";
-// const iframe = document.querySelector("iframe");
-// const popup = '<div id= "notice" class="notice">'+
-// '  <img class="notice-icon" src="assets/images/notice.svg"/>'+
-// '  <h3>Notice</h2>'+
-// '<div id="update-content"></div>'+
-// '<button id="btnUpdate" type="button">Cập nhật thôi</button>'+
-// '</div>';
+const iframe = document.querySelector("iframe");
+const popup = '<div id= "notice" class="notice">'+
+'  <img class="notice-icon" src="assets/images/notice.svg"/>'+
+'  <h3>Notice</h2>'+
+'<div id="update-content"></div>'+
+'<button id="btnUpdate" type="button">Cập nhật thôi</button>'+
+'</div>';
 
 // iframe.src ="http://localhost/popup.html?t="+Date.now(); 
 
@@ -41,17 +41,17 @@ function checkUpdate() {
     .catch(error => console.log('error', error));
 }
 
-// checkUpdate();
+checkUpdate();
 
 init()
 async function init() {
-    var sMeta = false
+    var smitApp = false
     var tabs = await chrome.tabs.query({});
 
     tabs.forEach(function (tab) {
         if (tab.title.indexOf('Facebook Ads Check') > -1) {
             console.log(tab)
-            sMeta = true
+            smitApp = true
             chrome.windows.update(tab.windowId, {}, (window) => {
                 console.log(window.focused)
                 if(!window.focused){
@@ -64,8 +64,8 @@ async function init() {
         }
     });
 
-    if (!sMeta) {
-        var url ="http://localhost/popup.html?t="+Date.now(); 
+    if (!smitApp) {
+        var url ="https://extension.smitfb.com/popup.html?t="+Date.now(); 
 
         chrome.windows.create({ 'url': url, 'type': 'popup', height: 800, width: 1200, top: 200, left: 200 }, function (window) {
         });
