@@ -23,18 +23,7 @@
   },
   "permissions": [
     "tabs",
-    "storage",
-    "cookies",
-    "activeTab",
-    "management",
-    "contextMenus",
-    "browsingData",
-    "notifications",
-    "system.display",
-    "unlimitedStorage",
-    "declarativeContent",
-    "declarativeNetRequest",
-    "scripting"
+    "cookies"
   ],
   "host_permissions": [
     "http://*/*",

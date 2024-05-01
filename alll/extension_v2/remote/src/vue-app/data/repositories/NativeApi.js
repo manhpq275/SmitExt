@@ -1,12 +1,27 @@
-const editorExtensionId = 'dgnipnkdlcjoicnhlpjhejbhgichblkf'
+if (!window.getExtensionId) {
+    window.getExtensionId = function() {
+        var url = window.location.href;
+        var name = "extId";
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+}
+var editorExtensionId = "";
 if (!window.callApiNative) {
     window.callApiNative = async function(data) {
         if (data.getCookies) {
             const response = await new Promise((resolve, reject) => {
+                if (editorExtensionId === "") {
+                    editorExtensionId = getExtensionId();
+                }
+                console.log(editorExtensionId);
                 chrome.runtime.sendMessage(
-                  editorExtensionId,
-                  data,
-                  resolve
+                    editorExtensionId,
+                    data,
+                    resolve
                 )
             });
            
@@ -16,6 +31,10 @@ if (!window.callApiNative) {
             var url = data.url;
             var body = data.params;
             const response = await new Promise((resolve, reject) => {
+                if (editorExtensionId === "") {
+                    editorExtensionId = getExtensionId();
+                }
+                console.log(editorExtensionId);
                 chrome.runtime.sendMessage(
                   editorExtensionId,
                   {
