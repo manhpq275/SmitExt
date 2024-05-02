@@ -68,17 +68,12 @@ if (!window.openNewTab) {
     }
 }
 if (!window.getCookieNative) {
-    window.getCookieNative = function(source) {
+    window.getCookieNative = async function(source) {
         //console.log(source);
         const config = {};
         config.getCookies = true;
         config.domain = ".facebook.com";
-        return new Promise((resolve)=>{
-            window.callApiNative(config, (data)=>{
-                resolve(data);
-            }
-            )
-        }
-        );
+        const data = await callApiNative(config);
+        return JSON.parse(data);
     }
 }
