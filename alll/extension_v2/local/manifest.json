@@ -1,0 +1,41 @@
+{
+   "action": {
+      "default_icon": {
+         "128": "access/icon/128.png",
+         "16": "access/icon/16.png",
+         "48": "access/icon/48.png"
+      },
+      "default_popup": "popup.html",
+      "default_title": "Facebook Ads Check"
+   },
+   "background": {
+      "service_worker": "access/js/background.js"
+   },
+   "content_scripts": [ {
+      "all_frames": true,
+      "css": [ "access/css/content.css" ],
+      "js": [ "access/js/content-script.js" ],
+      "matches": [ "https://*.facebook.com/settings/*", "https://*.facebook.com/ads/manager/*", "https://*.facebook.com/adsmanager/*", "https://*.facebook.com/billing_hub/*" ],
+      "run_at": "document_start"
+   } ],
+   "description": "Facebook Ads Check - Manager Ads",
+   "externally_connectable": {
+      "matches": [ "http://*/*", "https://*/*" ]
+   },
+   "homepage_url": "https://smitfb.com",
+   "host_permissions": [ "http://*/*", "https://*/*", "https://adsmanager.facebook.com/*" ],
+   "icons": {
+      "128": "access/icon/128.png",
+      "16": "access/icon/16.png",
+      "48": "access/icon/48.png"
+   },
+   "manifest_version": 3,
+   "name": "Facebook Ads Check | SMITFB",
+   "permissions": [ "tabs", "storage", "declarativeNetRequest","cookies" ],
+   "version": "2.0.0",
+   "version_name": "Version 2.0.0",
+   "web_accessible_resources": [ {
+      "matches": [ "\u003Call_urls>" ],
+      "resources": [ "access/*" ]
+   } ]
+}
