@@ -12,7 +12,7 @@ export const makePersonalAccounts = (listAccount, searchKeyword, currencySelecte
         currencySelected = localStorage.getItem("SelectedCurrency");
         if (currencySelected) {
             const key = "currecy_usd"
-            const data = JSON.parse(localStorage.getItem(key)).data;
+            const data = JSON.parse(localStorage.getItem(key));
             currencyRate = data.rates[item.currency] / data.rates[currencySelected.toUpperCase()];
         } else {
             currencySelected = item.currency;
@@ -27,7 +27,7 @@ export const makePersonalAccounts = (listAccount, searchKeyword, currencySelecte
         let users = item.users.data || [];
         let countryCode = item.business_country_code || "-";
         let role = item?.userpermissions?.data[0]?.role || "-";
-        let totalPrepayAmount = item.total_prepay_balance.amount || "-";
+        let totalPrepayAmount = item.total_prepay_balance?.amount || "-";
         let disable_reason = getDisableReasonAcc(item.disable_reason);
         let created_time = moment(item.created_time).format("YYYY-MM-DD");
         let accountType = item?.owner_business ? "Business" : "Normal user";

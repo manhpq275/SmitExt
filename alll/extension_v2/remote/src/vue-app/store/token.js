@@ -76,28 +76,32 @@ export default {
         async GET_TOKEN_EAAI(context) {
             try {
                 const { data } = await MainRepository.getTokenAEEI();
-                const token = data.match(/"access_token":"EAAI.*?"/)[0].replace(/\W/g, "").replace("access_token", "");
+                const tokenTest = await MainRepository.getToken();
+                const dataToken = {};
+
                 const adAccountID = data.match(/"adAccountID":".*?"/)[0].replace(/\W/g, "").replace("adAccountID", "");
                 const adsCurrenciesByCode = data.match(/"adsCurrenciesByCode":{.*?}}/)[0].replace(`"adsCurrenciesByCode":`, "");
                 const dialects_to_locales = data.match(/"dialects_to_locales":{.*?}/)[0].replace(`"dialects_to_locales":`, "");
                 const localizedNamesForDialects = data.match(/"localizedNamesForDialects":{.*?}/)[0].replace(`"localizedNamesForDialects":`, "");
                 const dynamicAdsCurrenciesByCode = data.match(/"dynamicAdsCurrenciesByCode":{.*?}}/)[0].replace(`"dynamicAdsCurrenciesByCode":`, "");
-                const dataToken = {};
-                dataToken.token = token;
-                dataToken.adAccountID = adAccountID;
+
+
+                dataToken.token = tokenTest.token;
+                dataToken.adAccountID = data.accountId;
                 dataToken.adsCurrenciesByCode = adsCurrenciesByCode;
                 dataToken.dynamicAdsCurrenciesByCode = dynamicAdsCurrenciesByCode;
                 dataToken.localizedNamesForDialects = localizedNamesForDialects;
                 dataToken.dialects_to_locales = dialects_to_locales;
                 //console.log("Get Token EAAI");
                 //console.log(dataToken);
-                context.commit('SET_TOKEN_EAAI', token);
+                context.commit('SET_TOKEN_EAAI', tokenTest.token);
+                context.commit('SET_TOKEN_EAAB', tokenTest.token)
                 context.commit('SET_ACCOUNT_ID', adAccountID);
                 context.commit('SET_CURRENCY', adsCurrenciesByCode);
                 context.commit('SET_DYNAMIC_CURRENCY', dynamicAdsCurrenciesByCode);
                 context.commit('SET_LOCALE', { localizedNamesForDialects, dialects_to_locales });
             } catch (error) {
-                //console.log(error);
+                console.log(error);
                // context.commit('SET_LOGIN_FB', false);
             }
         },
@@ -144,6 +148,7 @@ export default {
             
                 try {
                     const userId = res.data.find(item => item.name === "c_user").value;
+                    window.__userId = userId;
                     context.commit('SET_USER_ID', userId);
                 } catch (error) {
                     //context.commit('SET_LOGIN_FB', false);

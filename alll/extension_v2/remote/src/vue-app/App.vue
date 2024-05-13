@@ -44,7 +44,7 @@ export default {
     async initAppConfig() {
        this.store.dispatch("GET_USER_ID");
        this.store.dispatch("GET_TOKEN_EAAI");
-       this.store.dispatch("GET_TOKEN_EAAB");
+      //  this.store.dispatch("GET_TOKEN_EAAB");
        this.store.dispatch("GET_CURRENCY_RATE", currencyList);
     },
   },

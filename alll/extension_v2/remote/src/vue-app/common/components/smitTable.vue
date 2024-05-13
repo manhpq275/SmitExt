@@ -70,7 +70,7 @@ export default {
 }
 
 .table-wrapper {
-  height: 100%;
+  height: 564px;
   overflow: auto;
   background-color: var(--bs-background-color);
 

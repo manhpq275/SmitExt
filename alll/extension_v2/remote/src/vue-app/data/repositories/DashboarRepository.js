@@ -1,14 +1,34 @@
 import { DashboardResource } from '../resources/dashboard.resource';
 
 const DashBoardRepository = {
-    getAdsAccounts: (params) => {
+    getAdsAccounts: async (params) => {
         const resource = DashboardResource.getAdsAccount();
         var config = {
             url: resource.path,
             method: "get",
             params: params
         }
-        return callApiNative(config);
+        var json = await callApiNative(config);
+        //total_prepay_balance
+        if ('error' in json.data) {
+            config.params.fields = config.params.fields.replace(/,total_prepay_balance/g, '')
+            json = await callApiNative(config);
+        }
+
+        if ('error' in json.data) {
+            config.params.fields = config.params.fields.replace(/,payment_method_direct_debits{address,can_verify,display_string,is_awaiting,is_pending,status}/g, '')
+            json = await callApiNative(config);
+        }
+
+        if ('error' in json.data) {
+            config.params.fields = config.params.fields.replace(
+              /,all_payment_methods{pm_credit_card{display_string,exp_month,exp_year,is_verified}}/g,
+              ''
+            )
+            json = await callApiNative(config);
+        }
+        
+        return json;
     },
     getAdsAccountById: (params) => {
         const resource = DashboardResource.getAdsAccountById(params.id);

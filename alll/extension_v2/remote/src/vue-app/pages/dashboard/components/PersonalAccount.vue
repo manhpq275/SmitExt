@@ -44,10 +44,6 @@
         <td class="text-center">{{ item.countryCode }}</td>
       </template>
     </smit-table>
-    <smit-table-control :pagination="tableInfo.pagination" @changePage="onChangePage" @changePerPage="onChangePerPage" />
-    <status-modal ref="statusModal" :listFbAccount="tableInfo.contentsSave" @onSave="onFilterStatus" />
-    <modal-change-name ref="changeNameModal" @changeNameSuccess="onChangeNameSuccess" />
-    <modal-permission ref="changePermissionModal" />
     <smit-loading v-show="tableInfo.loading" />
   </div>
 </template>
@@ -112,45 +108,49 @@ export default {
     this.emitter.off("onChangeCurrency", this.onChangeCurrency);
   },
   methods: {
+    async nextPageAdsAccount() {
+      
+    },
     // [API]
-    async getAdsAccount(direction) {
+    async getAdsAccount(after) {
       //console.log("PersonalAccount");
-      this.tableInfo.loading = true;
-      const { perPage, currentPage, after, before } = this.tableInfo.pagination;
+     
 
       const fields = getPersonalRequestFields(this.userID);
 
       let params = {
         summary: 1,
+        limit: 10,
         locale: "en_US",
         fields: fields.join(","),
         access_token: this.tokenAEEI,
       };
-
-      if (direction === "next") params["after"] = after;
-      if (direction === "prev") params["before"] = before;
-      if (perPage !== "max") params["limit"] = perPage;
-
+      if (after) {
+        params.after = after;
+        this.tableInfo.loading = false;
+        params.limit = 10;
+      } else {
+        this.tableInfo.loading = true;
+        params.limit = 15;
+      }
       const { data } = await DashBoardRepository.getAdsAccounts(params);
-      const listAdsAccount = data.data;
-      SmitFbSystem.tracking("AdsAccount", listAdsAccount);
-      const { summary, paging } = data;
-      this.tableInfo.contents = makePersonalAccounts(listAdsAccount, this.searchKeyword, this.currency);
+      SmitFbSystem.tracking("AdsAccount", data.data);
+      var tmpAccount = makePersonalAccounts(data.data, this.searchKeyword, this.currency);
+      this.tableInfo.contents.push(...tmpAccount);
       this.tableInfo.contentsSave = this.tableInfo.contents;
-
-      const newPagination = {
-        ...this.tableInfo.pagination,
-        currentPage: currentPage,
-        after: paging.cursors.after,
-        before: paging.cursors.before,
-        totalPage: Math.ceil(summary.total_count / perPage),
-      };
-
-      if (direction === "next") newPagination["currentPage"] = currentPage + 1;
-      if (direction === "prev") newPagination["currentPage"] = currentPage - 1;
-
-      this.tableInfo.pagination = newPagination;
       this.tableInfo.loading = false;
+  
+      var tempNext = data.paging;
+
+        if (tempNext?.cursors?.after) {
+          this.getAdsAccount(tempNext.cursors.after);
+            // var tmpParams = params;
+            // tmpParams.after = tempNext.cursors.after;
+            // const { tmpData } = await DashBoardRepository.getAdsAccounts(tmpParams);
+            // tempNext = tmpData.paging;
+            // tmpAccount = makePersonalAccounts(data.data, this.searchKeyword, this.currency);
+            // this.tableInfo.contents.push(...tmpAccount);
+        }
     },
     // [EVENT]
     onChangePage(direction) {
