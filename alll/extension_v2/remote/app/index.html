@@ -25,9 +25,12 @@
             return decodeURIComponent(results[2].replace(/\+/g, ' '));
         }
     }
+    const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4')
+    .then(FingerprintJS => FingerprintJS.load())
     var editorExtensionId = "";
     </script>
     <script defer="defer" src="../static/js/main.8b0f554a.js?t=5345345"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link href="../static/css/main.3df63ae7.css" rel="stylesheet">
   </head>
   <body>
