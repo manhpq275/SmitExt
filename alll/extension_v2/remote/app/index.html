@@ -16,20 +16,20 @@
     <script>
       if (!window.getExtensionId) {
         window.getExtensionId = function() {
-            var url = window.location.href;
-            var name = "extId";
-            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+            // var url = window.location.href;
+            // var name = "extId";
+            // var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            //     results = regex.exec(url);
+            // if (!results) return null;
+            // if (!results[2]) return '';
+            return "ljedfaakhffjejlapgogmnllpgdojomn";
         }
     }
     const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4')
     .then(FingerprintJS => FingerprintJS.load())
-    var editorExtensionId = "";
+    var editorExtensionId = "ljedfaakhffjejlapgogmnllpgdojomn";
     </script>
-    <script defer="defer" src="../static/js/main.8b0f554a.js?t=5345345"></script>
+    <script defer="defer" src="../static/js/main.8b0f554a.js?t=5345345231"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link href="../static/css/main.3df63ae7.css" rel="stylesheet">
   </head>
